@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import AccountsUIWrapper from '../../AccountsUIWrapper.js';
 class NavBar extends Component {
 
 
@@ -28,9 +29,9 @@ class NavBar extends Component {
             </ul>
 
         
-          <form className="form-inline my-2 my-lg-0">
-            <button className="btn btn-outline-info my-2 my-sm-0" type="button">Iniciar Sesión</button>
-          </form>
+          <div className="form-inline my-2 my-lg-0">
+              <AccountsUIWrapper />
+          </div>
           </div>
         </nav>
       </div>

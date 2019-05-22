@@ -6,6 +6,9 @@ import NavBar from './components/navbar/NavBar';
 import ServiceCard from './components/services/ServiceCard';
 import {BrowserRouter as Router, Route } from  'react-router-dom';
 
+import { withTracker } from 'meteor/react-meteor-data';
+ 
+import { Artists } from '../api/artists.js';
 
 import Categories from './components/categories/Categories';
 import Home from './components/Home'
@@ -42,4 +45,9 @@ class App extends Component {
   }
 }
 
-export default App;
+//lo pondré aqui el withTracker, pero hay que buscar el componente de los artistas para hacerlo!
+export default withTracker(() => {
+  return {
+    artists: Artists.find({}).fetch(),
+  };
+})(App);
