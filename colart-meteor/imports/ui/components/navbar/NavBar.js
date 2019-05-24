@@ -9,9 +9,10 @@ class NavBar extends Component {
    
     if(Meteor.user()){
       //aca iria el meteor.call
-      <Link className="nav-link" to="/MiPerfil"/>
+     // <Link className="nav-link" to="/MiPerfil"/>
+     window.location = '/MiPerfil';
     }else{
-      Console.log("You have to be logged in to show you your profile")
+      console.log("You have to be logged in to show you your profile");
     }
   }
 

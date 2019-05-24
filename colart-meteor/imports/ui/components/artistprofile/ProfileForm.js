@@ -17,7 +17,6 @@ class ProfileForm extends Component {
         e.preventDefault();
 
         let artist = {
-            _id: this.state._id,
             name: this.state.name,
             lastname: this.state.lastname,
             minidescription: this.state.minidescription,
@@ -72,38 +71,20 @@ class ProfileForm extends Component {
         });
     }
 
-    createBook(libro) {
-        console.log(libro)
-        //2 iguales compara el valor, 3 iguales compara el tipo y el valor
-        if (libro._id == undefined) {
-            libro._id = Math.random().toString(16).substr(2, 20);
-            BookCollection.insert(libro, (err) => {
-                if (err) {
-                    console.log(err)
-                }
-            })
-        } else {
-            BookCollection.update(libro._id, libro);
-        }
-        this.setState({
-            libroEdit: { id: "", name: "", author: "" }
-        })
-    }
-
     componentWillReceiveProps(props) {
         this.setState({
-            _id: props.libroEdit._id,
-            name: props.libroEdit.name,
-            lastname: props.libroEdit.lastname,
-            minidescription: props.libroEdit.minidescription,
-            description: props.libroEdit.description,
-            profession: props.libroEdit.profession,
-            video: props.libroEdit.video,
-            picprofile: props.libroEdit.picprofile,
-            category: props.libroEdit.category,
-            facebook: props.libroEdit.facebook,
-            instagram: props.libroEdit.instagram,
-            youtube: props.libroEdit.youtube
+           // _id: props.artistEdit._id,
+           // name: props.artistEdit.name,
+           // lastname: props.artistEdit.lastname,
+           // minidescription: props.artistEdit.minidescription,
+           // description: props.artistEdit.description,
+           // profession: props.artistEdit.profession,
+           // video: props.artistEdit.video,
+           // picprofile: props.artistEdit.picprofile,
+           // category: props.artistEdit.category,
+           // facebook: props.artistEdit.facebook,
+           // instagram: props.artistEdit.instagram,
+           // youtube: props.artistEdit.youtube
         });
     }
 
@@ -140,11 +121,6 @@ class ProfileForm extends Component {
                     <div className="form-group">
                         <label htmlFor="video">Video</label>
                         <input type="text" className="form-control" id="video" name="video" value={this.state.video} onChange={this.handleOnChange.bind(this)} />
-                    </div>
-
-                    <div className="form-group">
-                        <label htmlFor="picprofile">Video</label>
-                        <input type="text" className="form-control" id="picprofile" name="picprofile" value={this.state.picprofile} onChange={this.handleOnChange.bind(this)} />
                     </div>
 
                     <div className="form-group">

@@ -22,7 +22,7 @@ class ArtistProfile2 extends Component {
   deleteProfile(){
     Meteor.call('artists.delete', Meteor.userId());
   }
-  
+
   render() {
     var styles = {
       width: '300px',
@@ -126,10 +126,10 @@ class ArtistProfile2 extends Component {
 
                   <div className="float-right" >
 
-                    <i className="fa fa-facebook-square fa-5x "></i>
-                    <i className="fa fa-instagram fa-5x"></i>
-                    <i className="fa fa-youtube fa-5x margin-left"></i>
-                   
+                    <a src={this.state.facebook}><i className="fa fa-facebook-square fa-5x "></i></a>
+                    <a src={this.state.instagram}><i className="fa fa-instagram fa-5x"></i></a>
+                    <a src={this.state.youtube}><i className="fa fa-youtube fa-5x margin-left"></i></a>
+                    
                   </div>
                 </div>
               </div>
