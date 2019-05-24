@@ -2,27 +2,27 @@ import React, { Component } from 'react';
 import Crowdfunding from '../Crowdfunding/Crowdfunding';
 import { Modal } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
+import { metaProperty } from '@babel/types';
 
-class ArtistProfile extends Component {
-  constructor(props, context) {
-    super(props, context);
+class ArtistProfile2 extends Component {
+  constructor(){
+    super();
 
-    this.handleShow = this.handleShow.bind(this);
-    this.handleClose = this.handleClose.bind(this);
-
-    this.state = {
-      show: false,
-    };
+    this.state={
+      //artist that is in the form
+      _id:"", name:"", lastname:"", minidescription:"", description:"", profession:"",
+      video:"", picprofile:"", category:"", facebook:"", instagram:"", youtube:""
+    }
   }
 
-  handleClose() {
-    this.setState({ show: false });
+  handleProfile(){
+    <Link className="nav-link" to="/MiPerfil"/>
   }
 
-  handleShow() {
-    this.setState({ show: true });
+  deleteProfile(){
+    Meteor.call('artists.delete', Meteor.userId());
   }
-
+  
   render() {
     var styles = {
       width: '300px',
@@ -42,35 +42,28 @@ class ArtistProfile extends Component {
       height: '240px'
     };
     return (
-      <div className="ArtistProfile container">
+      <div className="ArtistProfile2 container">
 
         <div className="container">
-          <h1 className="text-center"></h1>
+          <h1 className="text-center" value={this.state.name}></h1>
+          <h1 className="text-center" value={this.state.lastname}></h1>
           <br></br>
         
           <div className="row">
             <div className="col-sm">
-              <img src="https://images.pexels.com/photos/1425297/pexels-photo-1425297.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" style={styles}></img>
-         
+              <img src={this.state.picprofile} style={styles}></img>         
             </div>
            
             <div className="col-sm">
-
               <h1>Descripción</h1>
-              <p>Me apasiona la música desde el vientre de mi madre. He soñado que con la letra de mis canciones. <br></br>
-                Las personas se conecten conmigo y disfruten la vida de otra manera con la melodía de mi guitarra.</p>
+              <p value={this.state.description}></p>
             </div>
-
-
-
-
           </div>
 
 
           <div className="row">
             <div className="col-sm">
             <div>
-              <i className="fa fa-retweet fa-4x text-info mr-4"></i> 
               <i className="fa fa-star text-warning fa-3x"></i>
               <i className="fa fa-star text-warning fa-3x"></i>
               <i className="fa fa-star text-warning fa-3x"></i>
@@ -81,16 +74,19 @@ class ArtistProfile extends Component {
               <h5>Fecha: Mayo 12, 2019</h5>
               <h5>Celebración Día de la Madre</h5>
               <h6>Presentación en vivo en Hotel Dann Carlton</h6>
+              <button type="button" class="btn btn-info">Editar evento</button>
+              <button type="button" class="btn btn-warning">Eliminar evento</button>
               <hr></hr>
               <h5>Fecha: Junio 13, 2019</h5>
               <h5>Homenaje Metallica</h5>
               <h6>Presentación en vivo en Bar Route66</h6>
+              <button type="button" class="btn btn-info">Editar evento</button>
+              <button type="button" class="btn btn-warning">Eliminar evento</button>
               <hr></hr>
-
+              <button type="button" class="btn btn-info">Agregar evento</button>
             </div>
             <div className="col-sm">
-              <iframe width="560" height="315" src="https://www.youtube.com/embed/hXQxSi34GWY?autoplay=1" frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-
+              <iframe width="560" height="315" src={this.state.video} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
             </div>
 
           </div>
@@ -98,7 +94,8 @@ class ArtistProfile extends Component {
 
           <div className="row">
             <div className="col-sm">
-
+            <button type="button" class="btn-lg btn-info" onClick={this.handleProfile.bind(this)}>Editar Perfil</button>
+            <button type="submit" class="btn-lg btn-warning" onSubmit={this.deleteProfile.bind(this)}>Eliminar Perfil</button>            
             </div>
 
 
@@ -129,15 +126,13 @@ class ArtistProfile extends Component {
 
                   <div className="float-right" >
 
-                    <i className="fa fa-facebook-square fa-5x " ></i>
+                    <i className="fa fa-facebook-square fa-5x "></i>
                     <i className="fa fa-instagram fa-5x"></i>
                     <i className="fa fa-youtube fa-5x margin-left"></i>
                    
                   </div>
                 </div>
               </div>
-
-
 
 
             </div>
@@ -154,4 +149,4 @@ class ArtistProfile extends Component {
   }
 }
 
-export default ArtistProfile;
+export default ArtistProfile2;

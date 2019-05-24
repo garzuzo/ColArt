@@ -3,6 +3,17 @@ import { Link } from 'react-router-dom';
 import AccountsUIWrapper from '../../AccountsUIWrapper.js';
 class NavBar extends Component {
 
+  
+  handleProfile(){
+
+   
+    if(Meteor.user()){
+      //aca iria el meteor.call
+      <Link className="nav-link" to="/MiPerfil"/>
+    }else{
+      Console.log("You have to be logged in to show you your profile")
+    }
+  }
 
 
   render() {
@@ -28,7 +39,10 @@ class NavBar extends Component {
 
             </ul>
 
-        
+            <div className="form-inline">
+            <button type="button" class="btn btn-light" onClick={this.handleProfile.bind(this)}>Mi perfil</button>
+          </div>
+
           <div className="form-inline my-2 my-lg-0">
               <AccountsUIWrapper />
           </div>

@@ -73,7 +73,6 @@ class ArtistProfile extends Component {
           <div className="row">
             <div className="col-sm">
             <div>
-              <i className="fa fa-retweet fa-4x text-info mr-4"></i> 
               <i className="fa fa-star text-warning fa-3x"></i>
               <i className="fa fa-star text-warning fa-3x"></i>
               <i className="fa fa-star text-warning fa-3x"></i>
