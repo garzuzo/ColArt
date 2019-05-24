@@ -49,5 +49,6 @@ class App extends Component {
 export default withTracker(() => {
   return {
     artists: Artists.find({}).fetch(),
+    currentUser: Meteor.user()
   };
 })(App);
