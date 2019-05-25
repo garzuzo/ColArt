@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import { Meteor } from 'meteor/meteor';
 import ProfileForm from './ProfileForm'
 
 class ViewProfileForm extends Component {
@@ -7,19 +7,20 @@ class ViewProfileForm extends Component {
     constructor(){
         super();
         this.state={
-            artist:null
+            artist:null,
+            artistEdit:null
         }
     }
     componentWillMount(){
         let user= Meteor.user();
-        if(user){
-            this.setState({
-            
-                artist: Meteor.call('artists.findUsername', user.username)
+         console.log(user)
+            this.setState({            
+                artist: Meteor.call('artists.findUsername', user.username),
+                artistEdit: artist
             });
-        }else{
-            console.log("You have to be logged in")
-        }
+      //  }else{
+      //      console.log("You have to be logged in")
+      //  }
         
     }
 

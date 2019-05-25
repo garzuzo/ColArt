@@ -24,8 +24,8 @@ Meteor.methods({
       Artists.findOneAndUpdate({username: artist.username}, artist);
     }, 
     'artists.delete'(id){
-      let artist= Meteor.call('artists.findUsername', Meteor.user())
-      Artists.deleteOne( {_id: artist._id});
+      let artist= Meteor.user()
+      Artists.deleteOne( {username: artist.username});
       Meteor.users.remove(id);
     }
 });
