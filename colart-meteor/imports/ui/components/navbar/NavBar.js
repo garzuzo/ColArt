@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { Meteor } from 'meteor/meteor';
 import AccountsUIWrapper from '../../AccountsUIWrapper.js';
 class NavBar extends Component {
 
@@ -7,9 +8,10 @@ class NavBar extends Component {
   handleProfile(){
 
    
-    if(Meteor.user()){
+    if(Meteor.userId()){
       //aca iria el meteor.call
      // <Link className="nav-link" to="/MiPerfil"/>
+   //  console.log(Meteor.user())
      window.location = '/MiPerfil';
     }else{
       console.log("You have to be logged in to show you your profile");
@@ -41,7 +43,7 @@ class NavBar extends Component {
             </ul>
 
             <div className="form-inline">
-            <button type="button" class="btn btn-light" onClick={this.handleProfile.bind(this)}>Mi perfil</button>
+            <button type="button" className="btn btn-light" onClick={this.handleProfile.bind(this)}>Mi perfil</button>
           </div>
 
           <div className="form-inline my-2 my-lg-0">

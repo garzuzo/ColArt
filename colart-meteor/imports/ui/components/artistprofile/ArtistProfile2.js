@@ -16,7 +16,8 @@ class ArtistProfile2 extends Component {
   }
 
   handleProfile(){
-    <Link className="nav-link" to="/MiPerfil"/>
+    //<Link className="nav-link" to="/MiPerfil"/>
+    window.location = '/MiPerfil';
   }
 
   deleteProfile(){

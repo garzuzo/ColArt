@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { metaProperty } from '@babel/types';
-
 
 class ProfileForm extends Component {
     constructor() {
@@ -16,6 +14,7 @@ class ProfileForm extends Component {
     handleAction(e) {
         e.preventDefault();
 
+       
         let artist = {
             name: this.state.name,
             lastname: this.state.lastname,
@@ -31,8 +30,10 @@ class ProfileForm extends Component {
         }
 
         //si esta en la bd se va a editar
-        if (Meteor.call('artists.findOne', Meteor.user().username)) {
-            this.updateArtist(artist)
+        //let user= Meteor.user()
+        let user= Meteor.call('artists.findUsername', Meteor.userId());
+        if (user) {
+            this.updateArtist(artist, user.username)
         }
         //si no esta se va a crear
         else {
@@ -58,11 +59,11 @@ class ProfileForm extends Component {
             totalScore:0,
             averageScore:0
         }
-        Meteor.call('artist.insert', finalArtist)
+        Meteor.call('artists.insert', finalArtist)
     }
 
-    updateArtist(artist){
-        Meteor.call('artists.update', artist)
+    updateArtist(artist, username){
+        Meteor.call('artists.update', artist,username)
     }
 
     handleOnChange(event) {
@@ -72,20 +73,23 @@ class ProfileForm extends Component {
     }
 
     componentWillReceiveProps(props) {
-        this.setState({
-           // _id: props.artistEdit._id,
-           // name: props.artistEdit.name,
-           // lastname: props.artistEdit.lastname,
-           // minidescription: props.artistEdit.minidescription,
-           // description: props.artistEdit.description,
-           // profession: props.artistEdit.profession,
-           // video: props.artistEdit.video,
-           // picprofile: props.artistEdit.picprofile,
-           // category: props.artistEdit.category,
-           // facebook: props.artistEdit.facebook,
-           // instagram: props.artistEdit.instagram,
-           // youtube: props.artistEdit.youtube
-        });
+
+        if(props.artistEdit){
+            this.setState({
+                // _id: props.artistEdit._id,
+                // name: props.artistEdit.name,
+                // lastname: props.artistEdit.lastname,
+                // minidescription: props.artistEdit.minidescription,
+                // description: props.artistEdit.description,
+                // profession: props.artistEdit.profession,
+                // video: props.artistEdit.video,
+                // picprofile: props.artistEdit.picprofile,
+                // category: props.artistEdit.category,
+                // facebook: props.artistEdit.facebook,
+                // instagram: props.artistEdit.instagram,
+                // youtube: props.artistEdit.youtube
+             });
+        }        
     }
 
     render() {
@@ -129,9 +133,9 @@ class ProfileForm extends Component {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="category">Categoría</label>
+                        <label htmlFor="category">Categoria</label>
                         <select className="form-control custom-select" id="category" name="category" value={this.state.picprofile} onChange={this.handleOnChange.bind(this)}>
-                            <option>Música</option>
+                            <option>Musica</option>
                             <option>Pintura</option>
                             <option>Teatro</option>
                             <option>Danza</option>
