@@ -16,15 +16,15 @@ Meteor.methods({
         username: Meteor.users.findOne(Meteor.userId()).username,
       });
     },
-    'artists.findUsername'(username){
-
-      Artists.findOne({username: username})
+    'artists.findUsername'(id){
+      let user= Meteor.users.findOne({_id: id})
+      Artists.findOne({username: user.username})
     },
-    'artists.update'(artist){
-      Artists.findOneAndUpdate({username: artist.username}, artist);
+    'artists.update'(artist, username){
+      Artists.findOneAndUpdate({username: username}, artist);
     }, 
     'artists.delete'(id){
-      let artist= Meteor.user()
+      let artist= Meteor.users.findOne({_id: Meteor.userId()})
       Artists.deleteOne( {username: artist.username});
       Meteor.users.remove(id);
     }

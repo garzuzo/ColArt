@@ -14,6 +14,7 @@ class ProfileForm extends Component {
     handleAction(e) {
         e.preventDefault();
 
+       
         let artist = {
             name: this.state.name,
             lastname: this.state.lastname,
@@ -29,9 +30,10 @@ class ProfileForm extends Component {
         }
 
         //si esta en la bd se va a editar
-        let user= Meteor.user()
-        if (Meteor.call('artists.findUsername', user.username)) {
-            this.updateArtist(artist)
+        //let user= Meteor.user()
+        let user= Meteor.call('artists.findUsername', Meteor.userId());
+        if (user) {
+            this.updateArtist(artist, user.username)
         }
         //si no esta se va a crear
         else {
@@ -60,8 +62,8 @@ class ProfileForm extends Component {
         Meteor.call('artists.insert', finalArtist)
     }
 
-    updateArtist(artist){
-        Meteor.call('artists.update', artist)
+    updateArtist(artist, username){
+        Meteor.call('artists.update', artist,username)
     }
 
     handleOnChange(event) {

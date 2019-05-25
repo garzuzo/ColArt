@@ -8,7 +8,7 @@ class NavBar extends Component {
   handleProfile(){
 
    
-    if(Meteor.user()){
+    if(Meteor.userId()){
       //aca iria el meteor.call
      // <Link className="nav-link" to="/MiPerfil"/>
    //  console.log(Meteor.user())
