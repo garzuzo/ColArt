@@ -21,7 +21,7 @@ Meteor.methods({
       Artists.findOne({username: username})
     },
     'artists.update'(artist){
-      Artists.findOneAndUpdate({username: artist.username}, artist);
+      Artists.update({username: artist.username}, artist);
     }, 
     'artists.delete'(id){
       let artist= Meteor.call('artists.findUsername', Meteor.user())
