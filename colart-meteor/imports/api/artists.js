@@ -17,16 +17,18 @@ Meteor.methods({
       });
     },
     'artists.findUsername'(id){
-      let user= Meteor.users.findOne({_id: id})
+      console.log(id)
+      let user= Meteor.users.findOne({_id: id.trim()})
+      console.log(user)
       Artists.findOne({username: user.username})
     },
-    'artists.update'(artist){
-      Artists.update({username: artist.username}, artist);
+    'artists.update'(artist, username){
+      Artists.update({username: username}, artist);
     }, 
-    'artists.delete'(id){
+    'artists.delete'(){
       let artist= Meteor.users.findOne({_id: Meteor.userId()})
       Artists.deleteOne( {username: artist.username});
-      Meteor.users.remove(id);
+      Meteor.users.remove(Meteor.userId());
     }
 });
 

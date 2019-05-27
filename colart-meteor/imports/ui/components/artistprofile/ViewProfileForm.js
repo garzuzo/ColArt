@@ -15,8 +15,7 @@ class ViewProfileForm extends Component {
         console.log(Meteor.userId())
         if(Meteor.userId()){
             this.setState({            
-                artist: Meteor.call('artists.findUsername', Meteor.userId()),
-                artistEdit: artist
+                artistEdit: Meteor.call('artists.findUsername', Meteor.userId())
             });
         }else{
             console.log("You have to be logged in")
@@ -28,7 +27,7 @@ class ViewProfileForm extends Component {
 
     return (
       <div className="ViewProfileForm container">        
-        {this.state.artist ? (<ArtistProfile2 artist={this.state.artist}/>): (<ProfileForm  artistEdit={this.state.artistEdit}/>)}        
+        {this.state.artistEdit ? (<ArtistProfile2 artist={this.state.artistEdit}/>): (<ProfileForm  artistEdit={this.state.artistEdit}/>)}        
       </div>
     );
   }

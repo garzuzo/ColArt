@@ -21,7 +21,7 @@ class ArtistProfile2 extends Component {
   }
 
   deleteProfile(){
-    Meteor.call('artists.delete', Meteor.userId());
+    Meteor.call('artists.delete');
   }
 
   render() {
