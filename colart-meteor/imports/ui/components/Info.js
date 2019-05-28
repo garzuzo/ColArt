@@ -1,6 +1,34 @@
 import React, { Component } from 'react';
 
 class Info extends Component {
+
+  constructor() {
+    super();
+
+    this.state = {
+        email:"", text:"", name:"", category:""
+    }
+}
+
+  handleAction(){
+    let subject= this.state.name + " está interesad@ en " + this.state.category;
+    let msg= "Nombre: " + this.state.name + "\n" +
+              "Mensaje: \n" + this.state.text;
+    Meteor.call(
+      'sendEmail',
+      'mishale181@gmail.com',
+      this.state.email,
+      subject,
+      msg
+    );
+  }
+
+  handleOnChange(event) {
+    this.setState({
+        [event.target.name]: event.target.value
+    });
+}
+
   render() {
     var styles={ width:'300px',
         height:'300px',
@@ -58,18 +86,19 @@ class Info extends Component {
         <h4> ¡Siguenos en Facebook! <a className="nav-link" href="https://www.facebook.com/colartco/" target="_blank">https://www.facebook.com/colartco/</a></h4> 
         <br></br>
         <h1>CONTACTÁNOS</h1>
-        <form>
+
+        <form  onSubmit={this.handleAction.bind(this)}>>
         <div className="form-group">
-        <label htmlFor="nombre">Nombre</label>
-    <input type="text" className="form-control" id="nombre" placeholder="Ingresa tu nombre"/>
+        <label htmlFor="name">Nombre</label>
+    <input type="text" className="form-control" id="name" name="name" value={this.state.name} onChange={this.handleOnChange.bind(this)} placeholder="Ingresa tu nombre"/>
   </div>
         <div className="form-group">
-        <label htmlFor="correo">Correo electrónico</label>
-    <input type="email" className="form-control" id="correo" placeholder="name@example.com"/>
+        <label htmlFor="email">Correo electrónico</label>
+    <input type="email" className="form-control" id="email" name="email" value={this.state.email} onChange={this.handleOnChange.bind(this)} placeholder="name@example.com"/>
   </div>
   <div className="form-group">
-    <label htmlFor="arte">Arte al que desearía pertenecer</label>
-    <select className="form-control" id="arte">
+    <label htmlFor="category">Arte al que desearía pertenecer</label>
+    <select className="form-control custom-select" id="category" name="category" value={this.state.category} onChange={this.handleOnChange.bind(this)}>
       <option>Música</option>
       <option>Pintura</option>
       <option>Danza</option>
@@ -78,8 +107,8 @@ class Info extends Component {
   </div>
 
   <div className="form-group">
-    <label htmlFor="mensaje">Cuentános qué desearías saber</label>
-    <textarea className="form-control" id="mensaje" rows="3"></textarea>
+    <label htmlFor="text">Cuentános qué desearías saber</label>
+    <textarea className="form-control" id="text" rows="3" name="text" value={this.state.text} onChange={this.handleOnChange.bind(this)}></textarea>
   </div>
   <button type="submit" className="btn btn-primary">Enviar</button>
 </form>

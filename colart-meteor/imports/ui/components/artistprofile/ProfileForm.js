@@ -46,7 +46,6 @@ class ProfileForm extends Component {
 
     createArtist(artist){
         let finalArtist = {
-            _id: artist._id,
             name: artist.name,
             lastname: artist.lastname,
             minidescription: artist.minidescription,
@@ -79,18 +78,18 @@ class ProfileForm extends Component {
 
         if(props.artistEdit){
             this.setState({
-                // _id: props.artistEdit._id,
-                // name: props.artistEdit.name,
-                // lastname: props.artistEdit.lastname,
-                // minidescription: props.artistEdit.minidescription,
-                // description: props.artistEdit.description,
-                // profession: props.artistEdit.profession,
-                // video: props.artistEdit.video,
-                // picprofile: props.artistEdit.picprofile,
-                // category: props.artistEdit.category,
-                // facebook: props.artistEdit.facebook,
-                // instagram: props.artistEdit.instagram,
-                // youtube: props.artistEdit.youtube
+                _id: props.artistEdit._id,
+                name: props.artistEdit.name,
+                lastname: props.artistEdit.lastname,
+                minidescription: props.artistEdit.minidescription,
+                description: props.artistEdit.description,
+                profession: props.artistEdit.profession,
+                video: props.artistEdit.video,
+                picprofile: props.artistEdit.picprofile,
+                category: props.artistEdit.category,
+                facebook: props.artistEdit.facebook,
+                instagram: props.artistEdit.instagram,
+                youtube: props.artistEdit.youtube
              });
         }        
     }
@@ -137,7 +136,7 @@ class ProfileForm extends Component {
 
                     <div className="form-group">
                         <label htmlFor="category">Categoria</label>
-                        <select className="form-control custom-select" id="category" name="category" value={this.state.picprofile} onChange={this.handleOnChange.bind(this)}>
+                        <select className="form-control custom-select" id="category" name="category" value={this.state.category} onChange={this.handleOnChange.bind(this)}>
                             <option>Musica</option>
                             <option>Pintura</option>
                             <option>Teatro</option>
