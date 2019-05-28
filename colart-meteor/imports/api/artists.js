@@ -26,7 +26,7 @@ Meteor.methods({
       username: Meteor.users.findOne(this.userId).username,
     });
   },
-  'artists.findUsername'(id) {
+  'artists.findUsername'() {
 
     let user = Meteor.users.findOne({ _id: this.userId })
 
@@ -44,5 +44,8 @@ console.log(Artists.findOne({ username: user.username }))
     let artist = Meteor.users.findOne({ _id: this.userId })
     Artists.remove({ username: artist.username });
     Meteor.users.remove(this.userId);
+  },
+  'findArtistsByCategory'(categoryName){
+    return Artists.find({category:categoryName});
   }
 });

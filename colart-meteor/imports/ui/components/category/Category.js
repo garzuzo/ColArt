@@ -75,6 +75,20 @@ class Category extends Component {
             ]
         };
     }
+
+
+    findArtists(){
+
+       // let nameCategory=this.props.nameCategory;
+
+       Meteor.call('findArtistsByCategory',categoryName,(err,res)=>{
+
+       
+
+       this.setState({artists:res});
+
+       })
+    }
     render() {
 
 

@@ -10,7 +10,7 @@ class ArtistProfile2 extends Component {
 
     this.state={
       //artist that is in the form
-      _id:"", name:"dani", lastname:"", minidescription:"", description:"", profession:"",
+      _id:"", name:"", lastname:"", minidescription:"", description:"", profession:"",
       video:"", picprofile:"https://images.pexels.com/photos/1425297/pexels-photo-1425297.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", category:"", facebook:"", instagram:"", youtube:""
     }
   }
@@ -18,14 +18,20 @@ class ArtistProfile2 extends Component {
   componentWillMount(){
 
     let artist=this.props.artist;
-    //console.log(artist)
+    //console.log(artist) falta agregar todos los atributos
     if(artist && artist.artist){
       this.setState({lastname:artist.artist.lastname})
        this.setState({minidescription:artist.artist.minidescription})
       this.setState({name:artist.artist.name})
+      this.setState({minidescription:artist.artist.minidescription})
+      this.setState({description:artist.artist.description})
+     this.setState({profession:artist.artist.profession})
+     this.setState({video:artist.artist.video})
+     this.setState({category:artist.artist.category})
+     
+
     }
-   // this.setState({lastname:artist.artist.lastname})
-   // this.setState({minidescription:artist.artist.minidescription})
+ 
 
 
   }

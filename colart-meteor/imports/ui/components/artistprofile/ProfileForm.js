@@ -41,6 +41,7 @@ class ProfileForm extends Component {
         else {
             console.log("no existe")
             this.createArtist(artist)
+            
         }
     }
 
@@ -62,6 +63,12 @@ class ProfileForm extends Component {
             averageScore:0
         }
         Meteor.call('artists.insert', finalArtist)
+        //vericar
+        if (Meteor.userId()) {
+            window.location = '/MiPerfil';
+          } else {
+            alert("You have to be logged in to show you your profile");
+          }
     }
 
     updateArtist(artist, username){
