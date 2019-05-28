@@ -11,14 +11,16 @@ class ViewProfileForm extends Component {
             artistEdit:null
         }
     }
-    componentWillMount(){
+    componentDidMount(){
         console.log(Meteor.userId())
         if(Meteor.userId()){
+
+          //let ret=Meteor.call('artists.findUsername', Meteor.userId())
             this.setState({            
-                artistEdit: Meteor.call('artists.findUsername', Meteor.userId())
+                artistEdit: null
             });
         }else{
-            console.log("You have to be logged in")
+            alert("You have to be logged in")
         }
         
     }

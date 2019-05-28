@@ -5,16 +5,24 @@ import AccountsUIWrapper from '../../AccountsUIWrapper.js';
 class NavBar extends Component {
 
   
-  handleProfile(){
+  async handleProfile(){
 
    
     if(Meteor.userId()){
       //aca iria el meteor.call
      // <Link className="nav-link" to="/MiPerfil"/>
    //  console.log(Meteor.user())
+
+   const ret=  await Meteor.call('artists.findUsername', Meteor.userId())
+   if(ret){
+console.log("existe:"+ret)
+   }else{
+    console.log(":(")
+   }
+   console.log("id del usuario:"+Meteor.userId())
      window.location = '/MiPerfil';
     }else{
-      console.log("You have to be logged in to show you your profile");
+   alert("You have to be logged in to show you your profile");
     }
   }
 

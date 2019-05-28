@@ -31,12 +31,15 @@ class ProfileForm extends Component {
 
         //si esta en la bd se va a editar
         //let user= Meteor.user()
+        
         let user= Meteor.call('artists.findUsername', Meteor.userId());
         if (user) {
+            console.log("existe")
             this.updateArtist(artist, user.username)
         }
         //si no esta se va a crear
         else {
+            console.log("no existe")
             this.createArtist(artist)
         }
     }

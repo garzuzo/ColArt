@@ -50,8 +50,11 @@ class App extends Component {
 
 //lo pondré aqui el withTracker, pero hay que buscar el componente de los artistas para hacerlo!
 export default withTracker(() => {
+  Meteor.subscribe('users');
+  Meteor.subscribe('artists');
   return {
     artists: Artists.find({}).fetch(),
-    currentUser: Meteor.user()
+    currentUser: Meteor.user(),
+    users: Meteor.users.find({}).fetch()
   };
 })(App);

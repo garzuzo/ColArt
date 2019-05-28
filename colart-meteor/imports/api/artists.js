@@ -1,7 +1,17 @@
 import { Mongo } from 'meteor/mongo';
-import { Accounts } from 'meteor/accounts-base'
- 
+import { Meteor } from 'meteor/meteor';
+
 export const Artists = new Mongo.Collection('artists');
+export const Users = Meteor.users;
+if (Meteor.isServer) {
+  // This code only runs on the server
+  Meteor.publish('users', function() {
+    return Meteor.users.find();
+  });
+  Meteor.publish('artists', function() {
+    return Artists.find();
+  });
+}
 
 Meteor.methods({
     'artists.insert'(artist) {
@@ -13,22 +23,25 @@ Meteor.methods({
       Artists.insert({
         artist,
         createdAt: new Date(),
-        username: Meteor.users.findOne(Meteor.userId()).username,
+        username: Meteor.users.findOne(this.userId).username,
       });
     },
-    'artists.findUsername'(id){
-      console.log(id)
-      let user= Meteor.users.findOne({_id: id.trim()})
+     'artists.findUsername'(id){
+     
+      let user= Meteor.users.findOne({_id: id}).username
+      
       console.log(user)
-      Artists.findOne({username: user.username})
+      const retorno=   Artists.findOne({username: user})
+       console.log(retorno)
+           return retorno;
     },
     'artists.update'(artist, username){
       Artists.update({username: username}, artist);
     }, 
     'artists.delete'(){
-      let artist= Meteor.users.findOne({_id: Meteor.userId()})
-      Artists.deleteOne( {username: artist.username});
-      Meteor.users.remove(Meteor.userId());
+      let artist= Meteor.users.findOne({_id: this.userId})
+      Artists.remove( {username: artist.username});
+      Meteor.users.remove(this.userId);
     }
 });
 
