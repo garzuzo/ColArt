@@ -4,26 +4,49 @@ import { Meteor } from 'meteor/meteor';
 import AccountsUIWrapper from '../../AccountsUIWrapper.js';
 class NavBar extends Component {
 
-  
-  async handleProfile(){
-
-   
-    if(Meteor.userId()){
-      //aca iria el meteor.call
-     // <Link className="nav-link" to="/MiPerfil"/>
-   //  console.log(Meteor.user())
-
-   const ret=  await Meteor.call('artists.findUsername', Meteor.userId())
-   if(ret){
-console.log("existe:"+ret)
-   }else{
-    console.log(":(")
-   }
-   console.log("id del usuario:"+Meteor.userId())
-     window.location = '/MiPerfil';
-    }else{
-   alert("You have to be logged in to show you your profile");
+  constructor(props) {
+    super(props);
+    this.state = {
+      artist: null,
+      artistEdit: null
     }
+  }
+
+  handleProfile() {
+
+
+
+    //aca iria el meteor.call
+    // <Link className="nav-link" to="/MiPerfil"/>
+    //  console.log(Meteor.user())
+
+    const ret = Meteor.call('artists.findUsername', Meteor.userId(), function (err, res) {
+
+      if (err) {
+        alert(err)
+      } else {
+
+        if (Meteor.userId()) {
+          console.log(ret)
+          console.log(res)
+          if (res) {
+            console.log(res.artist)
+//this.setState({artistEdit:res.artist})
+console.log(artistEdit)
+          } else {
+            console.log(":(")
+          }
+          console.log("id del usuario:" + Meteor.userId())
+          window.location = '/MiPerfil';
+        } else {
+          alert("You have to be logged in to show you your profile");
+        }
+
+      }
+
+
+    })
+
   }
 
 
@@ -51,12 +74,12 @@ console.log("existe:"+ret)
             </ul>
 
             <div className="form-inline">
-            <button type="button" className="btn btn-light" onClick={this.handleProfile.bind(this)}>Mi perfil</button>
-          </div>
+              <button type="button" className="btn btn-light" onClick={this.handleProfile.bind(this)}>Mi perfil</button>
+            </div>
 
-          <div className="form-inline my-2 my-lg-0">
+            <div className="form-inline my-2 my-lg-0">
               <AccountsUIWrapper />
-          </div>
+            </div>
           </div>
         </nav>
       </div>
