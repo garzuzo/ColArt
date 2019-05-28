@@ -5,14 +5,29 @@ import { Button } from 'react-bootstrap';
 import { metaProperty } from '@babel/types';
 
 class ArtistProfile2 extends Component {
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
 
     this.state={
       //artist that is in the form
-      _id:"", name:"", lastname:"", minidescription:"", description:"", profession:"",
-      video:"", picprofile:"", category:"", facebook:"", instagram:"", youtube:""
+      _id:"", name:"dani", lastname:"", minidescription:"", description:"", profession:"",
+      video:"", picprofile:"https://images.pexels.com/photos/1425297/pexels-photo-1425297.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", category:"", facebook:"", instagram:"", youtube:""
     }
+  }
+
+  componentWillMount(){
+
+    let artist=this.props.artist;
+    //console.log(artist)
+    if(artist && artist.artist){
+      this.setState({lastname:artist.artist.lastname})
+       this.setState({minidescription:artist.artist.minidescription})
+      this.setState({name:artist.artist.name})
+    }
+   // this.setState({lastname:artist.artist.lastname})
+   // this.setState({minidescription:artist.artist.minidescription})
+
+
   }
 
   handleProfile(){
@@ -46,8 +61,8 @@ class ArtistProfile2 extends Component {
       <div className="ArtistProfile2 container">
 
         <div className="container">
-          <h1 className="text-center" value={this.state.name}></h1>
-          <h1 className="text-center" value={this.state.lastname}></h1>
+          <h1 className="text-center" >{this.state.name} {this.state.lastname}</h1>
+         
           <br></br>
         
           <div className="row">
@@ -57,7 +72,7 @@ class ArtistProfile2 extends Component {
            
             <div className="col-sm">
               <h1>Descripción</h1>
-              <p value={this.state.description}></p>
+              <p >{this.state.description}</p>
             </div>
           </div>
 

@@ -8,40 +8,33 @@ class ViewProfileForm extends Component {
     super(props);
     this.state = {
       artist: null,
-      artistEdit:null
+      artistEdit: null
     }
+    this.findUser = this.findUser.bind(this);
 
   }
+
+  findUser(){
+
+ // console.log(Meteor.userId())
+
+ let ret = null;
+ if (Meteor.userId()) {
+
+
+   ret = Meteor.call('artists.findUsername', Meteor.userId());
+   this.setState({
+    artistEdit: ret
+  });
+ 
+ } else {
+   alert("You have to be logged in")
+ }
+ 
+  }
   componentDidMount() {
-    console.log(Meteor.userId())
-
-    let ret={};
-    if (Meteor.userId()) {
-
-
-      Meteor.call('artists.findUsername', Meteor.userId(), function (err, res) {
-
-        if (err) {
-          alert(err)
-        } else {
-          if (res) {
-            console.log("existe:" + res)
-            ret=res;
-           
-          } else {
-            console.log(":(")
-          }
-
-        }
-
-      })
-    } else {
-      alert("You have to be logged in")
-    }
-    this.setState({
-      artistEdit: ret
-    });
-
+   
+this.findUser();
   }
 
   render() {
