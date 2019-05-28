@@ -5,26 +5,48 @@ import AccountsUIWrapper from '../../AccountsUIWrapper.js';
 class NavBar extends Component {
 
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      artist: null,
+      artistEdit: null
+    }
+  }
+
   handleProfile() {
 
 
-    if (Meteor.userId()) {
-      //aca iria el meteor.call
-      // <Link className="nav-link" to="/MiPerfil"/>
-      //  console.log(Meteor.user())
 
-        const ret = Meteor.call('artists.findUsername', Meteor.userId())
-        if (ret) {
-          console.log("existe:" + ret)
-        } else {
-          console.log(":(")
-        }
-        console.log("id del usuario:" + Meteor.userId())
-        window.location = '/MiPerfil';
+    //aca iria el meteor.call
+    // <Link className="nav-link" to="/MiPerfil"/>
+    //  console.log(Meteor.user())
+
+    const ret = Meteor.call('artists.findUsername', Meteor.userId(), function (err, res) {
+
+      if (err) {
+        alert(err)
       } else {
-        alert("You have to be logged in to show you your profile");
+
+        if (Meteor.userId()) {
+          console.log(ret)
+          console.log(res)
+          if (res) {
+            console.log(res.artist)
+//this.setState({artistEdit:res.artist})
+console.log(artistEdit)
+          } else {
+            console.log(":(")
+          }
+          console.log("id del usuario:" + Meteor.userId())
+          window.location = '/MiPerfil';
+        } else {
+          alert("You have to be logged in to show you your profile");
+        }
+
       }
-    
+
+
+    })
 
   }
 
