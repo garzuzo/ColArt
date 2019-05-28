@@ -28,11 +28,11 @@ Meteor.methods({
   },
   'artists.findUsername'(id) {
 
-    let user = Meteor.users.findOne({ _id: id }).username
+    let user = Meteor.users.findOne({ _id: this.userId})
 
     console.log(user)
-    const retorno = Artists.findOne({ username: user })
-    console.log(retorno)
+    let retorno = Artists.findOne({ username: user.username })
+    
     return retorno;
   },
   'artists.update'(artist, username) {
