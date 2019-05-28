@@ -75,16 +75,16 @@ class ArtistProfile2 extends Component {
               <h5>Fecha: Mayo 12, 2019</h5>
               <h5>Celebración Día de la Madre</h5>
               <h6>Presentación en vivo en Hotel Dann Carlton</h6>
-              <button type="button" class="btn btn-info">Editar evento</button>
-              <button type="button" class="btn btn-warning">Eliminar evento</button>
+              <button type="button" className="btn btn-info">Editar evento</button>
+              <button type="button" className="btn btn-warning">Eliminar evento</button>
               <hr></hr>
               <h5>Fecha: Junio 13, 2019</h5>
               <h5>Homenaje Metallica</h5>
               <h6>Presentación en vivo en Bar Route66</h6>
-              <button type="button" class="btn btn-info">Editar evento</button>
-              <button type="button" class="btn btn-warning">Eliminar evento</button>
+              <button type="button" className="btn btn-info">Editar evento</button>
+              <button type="button" className="btn btn-warning">Eliminar evento</button>
               <hr></hr>
-              <button type="button" class="btn btn-info">Agregar evento</button>
+              <button type="button" className="btn btn-info">Agregar evento</button>
             </div>
             <div className="col-sm">
               <iframe width="560" height="315" src={this.state.video} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
@@ -95,8 +95,8 @@ class ArtistProfile2 extends Component {
 
           <div className="row">
             <div className="col-sm">
-            <button type="button" class="btn-lg btn-info" onClick={this.handleProfile.bind(this)}>Editar Perfil</button>
-            <button type="submit" class="btn-lg btn-warning" onSubmit={this.deleteProfile.bind(this)}>Eliminar Perfil</button>            
+            <button type="button" className="btn-lg btn-info" onClick={this.handleProfile.bind(this)}>Editar Perfil</button>
+            <button type="submit" className="btn-lg btn-warning" onSubmit={this.deleteProfile.bind(this)}>Eliminar Perfil</button>            
             </div>
 
 

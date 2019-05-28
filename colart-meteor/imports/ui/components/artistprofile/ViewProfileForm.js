@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import ProfileForm from './ProfileForm'
-
+import ArtistProfile2 from './ArtistProfile2'
 class ViewProfileForm extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
       artist: null,
-      artistEdit: null
+      artistEdit:null
     }
+
   }
   componentDidMount() {
     console.log(Meteor.userId())

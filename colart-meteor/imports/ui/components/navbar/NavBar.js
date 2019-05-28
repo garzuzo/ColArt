@@ -8,8 +8,7 @@ class NavBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      artist: null,
-      artistEdit: null
+      
     }
   }
 
@@ -33,7 +32,7 @@ class NavBar extends Component {
           if (res) {
             console.log(res.artist)
 //this.setState({artistEdit:res.artist})
-console.log(artistEdit)
+//console.log(artistEdit)
           } else {
             console.log(":(")
           }
