@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Modal } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
-import ProfileForm  from './ProfileForm'
+import ProfileForm  from './ProfileForm';
+import EventsList from '../events/EventsList'
 
 class ArtistProfile2 extends Component {
   constructor(props) {
@@ -94,19 +95,7 @@ class ArtistProfile2 extends Component {
                 <i className="fa fa-star-half-o text-warning fa-3x"></i>
               </div>
               <h2><i className="fa fa-calendar"></i>Próximos Eventos</h2>
-              <h5>Fecha: Mayo 12, 2019</h5>
-              <h5>Celebración Día de la Madre</h5>
-              <h6>Presentación en vivo en Hotel Dann Carlton</h6>
-              <button type="button" className="btn btn-info">Editar evento</button>
-              <button type="button" className="btn btn-warning">Eliminar evento</button>
-              <hr></hr>
-              <h5>Fecha: Junio 13, 2019</h5>
-              <h5>Homenaje Metallica</h5>
-              <h6>Presentación en vivo en Bar Route66</h6>
-              <button type="button" className="btn btn-info">Editar evento</button>
-              <button type="button" className="btn btn-warning">Eliminar evento</button>
-              <hr></hr>
-              <button type="button" className="btn btn-info">Agregar evento</button>
+              <EventsList events={this.props.artist.artist.events}/>
             </div>
             <div className="col-sm">
               <iframe width="560" height="315" src={this.state.video} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
