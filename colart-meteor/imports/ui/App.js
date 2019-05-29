@@ -9,7 +9,7 @@ import {BrowserRouter as Router, Route } from  'react-router-dom';
 import { withTracker } from 'meteor/react-meteor-data';
  
 import { Artists } from '../api/artists.js';
-
+import { CategoryCollection } from '../api/categories.js';
 import Categories from './components/categories/Categories';
 import Home from './components/Home'
 import Info from './components/Info'
@@ -38,8 +38,8 @@ class App extends Component {
       <Route  exact path="/Payment" component={Payment} />
       <Route exact  path="/ArtistProfile" component={ArtistProfile} />
       <Route  exact path="/Crowdfunding" component={Crowdfunding} />
-      <Route  exact path="/Category" component={Category} />
-      <Route exact  path="/CategoryDetail" component={CategoryDetail} />
+      <Route  exact path="/Category/:catAct" component={Category} />
+      <Route exact  path="/CategoryDetail/:catDetAct" component={CategoryDetail} />
       <Route exact  path="/MiPerfil" component={ViewProfileForm} />
       
       </Router>
@@ -52,8 +52,10 @@ class App extends Component {
 export default withTracker(() => {
   Meteor.subscribe('users');
   Meteor.subscribe('artists');
+  Meteor.subscribe('categories');
   return {
     artists: Artists.find({}).fetch(),
+    categories: CategoryCollection.find({}).fetch(),
     currentUser: Meteor.user(),
     users: Meteor.users.find({}).fetch()
   };

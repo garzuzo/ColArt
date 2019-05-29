@@ -1,11 +1,34 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 class CategoryDetail extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      category: {}
+
+    }
+
+    this.findCategory = this.findCategory.bind(this);
+  }
+
+  findCategory() {
+    Meteor.call('categories.findByName', this.props.match.params.catDetAct, (err, res) => {
+
+      if (res) {
+        this.setState({ category: res })
+      }
+
+    })
+  }
+  componentDidMount(){
+    this.findCategory();
+  }
   render() {
     return (
       <div className="CategoryDetail">
 
-        <h1 className="text-center">Música</h1>
+        <h1 className="text-center">{this.state.category.name}</h1>
 
 
 
@@ -15,11 +38,11 @@ class CategoryDetail extends Component {
 
           <div className="row">
             <div className="col-sm">
-              <img src="https://images.pexels.com/photos/1626481/pexels-photo-1626481.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" className="card-img-top" alt="..." />
+              <img src={this.state.category.historyImage} className="card-img-top" alt="..." />
 
             </div>
             <div className="col-sm">
-              <p>Ya que en toda cultura conocida hubo alguna forma de manifestación musical, la historia de la música abarca todas las sociedades y épocas. No se limita,como es habitual en algunos ámbitos académicos a occidente. A menudo se utiliza la expresión «historia de la música» para referirse exclusivamente a la historia de la música europea y su evolución en el mundo occidental.</p>
+              <p>{this.state.category.historyDescription}</p>
             </div>
 
 
@@ -30,11 +53,11 @@ class CategoryDetail extends Component {
           <div className="row">
             <div className="col-sm">
 
-              <img src="https://www.elcorreodemadrid.com/images/carpeta_relacionados/2019/03/16/20474_laboratorio_de_intonarumori.jpg" className="card-img-top" alt="..." />
+              <img src={this.state.category.funFactsImage} className="card-img-top" alt="..." />
 
             </div>
             <div className="col-sm">
-              <p>El futurismo fue uno de los movimientos iniciales de vanguardia en la Europa del Siglo XX. Esta corriente artística fue fundada en Italia por el poeta italiano Filippo Tommaso Marinetti, quien redacta el Manifiesto Futurista, y lo publica el 20 de febrero de 1909 en el diario Le Figaro de París.</p>
+              <p>{this.state.category.funFactsDescription}</p>
 
             </div>
 
@@ -45,11 +68,11 @@ class CategoryDetail extends Component {
 
           <div className="row">
             <div className="col-sm">
-              <img src=" https://images.pexels.com/photos/953213/pexels-photo-953213.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" className="card-img-top" alt="..." />
+              <img src={this.state.category.motivationImage} className="card-img-top" alt="..." />
 
             </div>
             <div className="col-sm">
-              <p>  Debemos hacer que el ciudadano sienta y vea las bondades de la clase de música, de lo contrario él seguirá pensando (sintiendo) que, si bien eso lo ayuda o podría ayudarlo, nadie debe tomar decisiones afectivas por él. Este es el estricto punto de la cuestión: el afecto, lo emocional, los sentimientos. La idea es partir del afecto y no de la técnica.</p>
+              <p>{this.state.category.motivationDescription}</p>
             </div>
 
 
@@ -62,7 +85,7 @@ class CategoryDetail extends Component {
 
 
 
-        <Link className="nav-link" to="/Category">
+        <Link className="nav-link" to={"/Category/"+this.props.match.params.catDetAct}>
           <button className="btn btn-primary">Volver</button>
         </Link>
       </div>

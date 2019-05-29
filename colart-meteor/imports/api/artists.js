@@ -46,6 +46,6 @@ console.log(Artists.findOne({ username: user.username }))
     Meteor.users.remove(this.userId);
   },
   'findArtistsByCategory'(categoryName){
-    return Artists.find({category:categoryName});
+    return Artists.find({"artist.category":categoryName}).fetch();
   }
 });
