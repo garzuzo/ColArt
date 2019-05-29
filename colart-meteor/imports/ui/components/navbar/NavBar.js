@@ -28,7 +28,7 @@ class NavBar extends Component {
   render() {
     return (
       <div className="NavBar">
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <nav className="navbar navbar-expand-lg navbar-light bg-light mx-5">
           <a className="navbar-brand " to="/home">ColArt</a>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
@@ -48,11 +48,11 @@ class NavBar extends Component {
 
             </ul>
 
-            <div className="form-inline">
+            <div className="form-inline mx-auto">
               <button type="button" className="btn btn-light" onClick={this.handleProfile.bind(this)}>Mi perfil</button>
-            </div>
+          
 
-            <div className="form-inline my-2 my-lg-0">
+            
               <AccountsUIWrapper />
             </div>
           </div>
