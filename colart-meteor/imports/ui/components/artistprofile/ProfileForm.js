@@ -32,10 +32,10 @@ class ProfileForm extends Component {
         //si esta en la bd se va a editar
         //let user= Meteor.user()
         
-        let user= Meteor.call('artists.findUsername', Meteor.userId());
-        if (user) {
+        //let user= Meteor.call('artists.findUsername');
+        if (this.props.artistEdit) {
             console.log("existe")
-            this.updateArtist(artist, user.username)
+            this.updateArtist(artist, this.props.artistEdit.username)
         }
         //si no esta se va a crear
         else {
@@ -72,7 +72,24 @@ class ProfileForm extends Component {
     }
 
     updateArtist(artist, username){
-        Meteor.call('artists.update', artist,username)
+        console.log("ENTRO")
+        let finalArtist = {
+            name: artist.name,
+            lastname: artist.lastname,
+            minidescription: artist.minidescription,
+            description: artist.description,
+            profession: artist.profession,
+            video: artist.video,
+            picprofile: artist.picprofile,
+            category: artist.category,
+            facebook: artist.facebook,
+            instagram: artist.instagram,
+            youtube: artist.youtube,
+            events: this.props.artistEdit.artist.events,
+            totalScore:this.props.artistEdit.artist.totalScore,
+            averageScore:this.props.artistEdit.artist.averageScore
+        }
+        Meteor.call('artists.update', finalArtist,username)
     }
 
     handleOnChange(event) {
@@ -81,25 +98,25 @@ class ProfileForm extends Component {
         });
     }
 
-    componentWillReceiveProps(props) {
+    componentDidMount() {
 
-        if(props.artistEdit){
+        console.log(this.props.artistEdit)
+        if(this.props.artistEdit){
             this.setState({
-                _id: props.artistEdit._id,
-                name: props.artistEdit.name,
-                lastname: props.artistEdit.lastname,
-                minidescription: props.artistEdit.minidescription,
-                description: props.artistEdit.description,
-                profession: props.artistEdit.profession,
-                video: props.artistEdit.video,
-                picprofile: props.artistEdit.picprofile,
-                category: props.artistEdit.category,
-                facebook: props.artistEdit.facebook,
-                instagram: props.artistEdit.instagram,
-                youtube: props.artistEdit.youtube
-             });
-        }        
-    }
+                name: this.props.artistEdit.artist.name,
+                lastname: this.props.artistEdit.artist.lastname,
+                minidescription: this.props.artistEdit.artist.minidescription,
+                description: this.props.artistEdit.artist.description,
+                profession: this.props.artistEdit.artist.profession,
+                picprofile: this.props.artistEdit.artist.picprofile,
+                category: this.props.artistEdit.artist.category,
+                facebook: this.props.artistEdit.artist.facebook,
+                instagram: this.props.artistEdit.artist.instagram,
+                youtube: this.props.artistEdit.artist.youtube,
+                video: this.props.artistEdit.artist.video
+              });
+        }
+      }
 
     render() {
         return (

@@ -38,7 +38,7 @@ console.log(Artists.findOne({ username: user.username }))
       return null;
   },
   'artists.update'(artist, username) {
-    Artists.update({ username: username }, artist);
+    Artists.update({ username: username }, {$set: {artist:artist}});
   },
   'artists.delete'() {
     let artist = Meteor.users.findOne({ _id: this.userId })
