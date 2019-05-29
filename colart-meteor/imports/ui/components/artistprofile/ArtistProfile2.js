@@ -26,7 +26,6 @@ class ArtistProfile2 extends Component {
 
   componentDidMount() {
 
-    console.log(this.props.artist)
     this.setState({
       name: this.props.artist.artist.name,
       lastname: this.props.artist.artist.lastname,
@@ -56,7 +55,7 @@ class ArtistProfile2 extends Component {
 
     var icons = {
       fontSize: "50",
-      textColor: 'black',
+      color: 'black',
       marginLeft: '10px'
     }
 
@@ -106,7 +105,7 @@ class ArtistProfile2 extends Component {
 
           <div className="row">
             <div className="col-sm">
-              <button type="button" className="btn-lg btn-info" onClick={this.handleShow.bind(this)}>Editar Perfil</button>
+              <button type="button" className="btn-lg btn-info mr-3" onClick={this.handleShow.bind(this)}>Editar Perfil</button>
               <Modal show={this.state.show} onHide={this.handleClose.bind(this)}>
                 <Modal.Header closeButton>
                   <Modal.Title>Editar perfil</Modal.Title>
