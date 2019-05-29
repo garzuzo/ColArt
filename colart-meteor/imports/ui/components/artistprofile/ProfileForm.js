@@ -58,7 +58,7 @@ class ProfileForm extends Component {
             facebook: artist.facebook,
             instagram: artist.instagram,
             youtube: artist.youtube,
-            events:[{date:new Date(), location:"", description:"", title:""}],
+            events:[],
             totalScore:0,
             averageScore:0
         }
