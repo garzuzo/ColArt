@@ -5,7 +5,7 @@ import { Button } from 'react-bootstrap';
 import ProfileForm from './ProfileForm';
 import EventsList from '../events/EventsList';
 import EventForm from '../events/EventForm'
-import { Meteor } from 'meteor/meteor';
+
 class ArtistProfile extends Component {
   constructor(props) {
     super(props);
@@ -14,7 +14,7 @@ class ArtistProfile extends Component {
       //artist that is in the form
       _id: "", name: "", lastname: "", minidescription: "", description: "", profession: "",
       video: "", picprofile: "", category: "", facebook: "", instagram: "", youtube: "",
-      show: false, showEvent: false, artistAct: {}, usernameAct: this.props.match.params.artAct
+      show: false, showEvent: false, artistAct: {}, usernameAct: this.props.match.params.artAct, eventList: []
     }
     this.findArtist = this.findArtist.bind(this);
   }
@@ -39,13 +39,17 @@ class ArtistProfile extends Component {
           youtube: res.artist.youtube,
           video: res.artist.video
         });
+        var answ = [];
+        answ.push(<EventsList artist={this.state.artistAct} key="listaDeEventos" />);
+        this.setState({ eventList: answ });
+
       }
     })
 
   }
   componentDidMount() {
     this.findArtist();
-
+   
   }
 
 
@@ -96,9 +100,9 @@ class ArtistProfile extends Component {
           <div className="row">
             <div className="col-sm">
               <h2><i className="fa fa-calendar mr-2"></i>Eventos</h2>
-              
-              <EventsList artist={this.state.artistAct} />
 
+
+              {this.state.eventList}
             </div>
             <div className="col-sm">
               {this.state.video ? <iframe width="560" height="315" src={this.state.video} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe> : <h1>Aquí va tu video. Anímate!</h1>}
