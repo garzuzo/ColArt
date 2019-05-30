@@ -1,5 +1,6 @@
 import { Mongo } from 'meteor/mongo';
 import { Accounts } from 'meteor/accounts-base'
+import { Meteor } from 'meteor/meteor';
 
 export const CategoryCollection = new Mongo.Collection('categories');
 if (Meteor.isServer) {

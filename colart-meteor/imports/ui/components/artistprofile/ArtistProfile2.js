@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Modal } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import ProfileForm  from './ProfileForm';
-import EventsList from '../events/EventsList'
+import EventsList from '../events/EventsList';
+import EventForm from '../events/EventForm'
 
 class ArtistProfile2 extends Component {
   constructor(props) {
@@ -49,7 +50,14 @@ class ArtistProfile2 extends Component {
   }
 
   deleteProfile() {
-    Meteor.call('artists.delete');
+    Meteor.call('artists.delete', (err) =>{
+      if(err){
+        alert("Ocurrió un error. Intentalo de nuevo.")
+      }else{
+        alert("Perfil y cuenta eliminados exitosamente")
+      }
+    });
+    window.location = '/MiPerfil';
   }
 
   render() {
@@ -71,6 +79,7 @@ class ArtistProfile2 extends Component {
       width: '320px',
       height: '240px'
     };
+
     return (
       <div className="ArtistProfile2 container">
 
@@ -82,8 +91,10 @@ class ArtistProfile2 extends Component {
           <div className="row">
             <div className="col-sm">
               <img src={this.state.picprofile} style={styles}></img>
-              <h3>{this.state.profession}</h3>
-              <p>{this.state.minidescription}</p> 
+              <div className="mx-auto">
+              <h3 >{this.state.profession}</h3>
+              <p >{this.state.minidescription}</p> 
+              </div>              
             </div>
 
             <div className="col-sm">
@@ -95,25 +106,25 @@ class ArtistProfile2 extends Component {
 
           <div className="row">
             <div className="col-sm">
-              <h2><i className="fa fa-calendar"></i>Próximos Eventos</h2>
-              <EventsList events={this.props.artist.artist.events}/>
-            </div>
-            <div className="col-sm">
-              <iframe width="560" height="315" src={this.state.video} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-            </div>
-            <button type="button" className="btn btn-info mt-3" onClick={this.handleShowEvent.bind(this)}>Agregar evento</button>
+              <h2><i className="fa fa-calendar mr-2"></i>Mis Eventos</h2>
+              <EventsList artist={this.props.artist.artist}/>
+              <button type="button" className="btn btn-info mt-3" onClick={this.handleShowEvent.bind(this)}>Agregar evento</button>
             <Modal show={this.state.showEvent} onHide={this.handleCloseEvent.bind(this)}>
                 <Modal.Header closeButton>
                   <Modal.Title>Crear Evento</Modal.Title>
                 </Modal.Header>
-                <Modal.Body> <EventForm/> </Modal.Body>
+                <Modal.Body> <EventForm artist={this.props.artist}/> </Modal.Body>
               </Modal>
+            </div>
+            <div className="col-sm">
+            {this.state.video? <iframe width="560" height="315" src={this.state.video} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe> : <h1>Aquí va tu video. Anímate!</h1>}  
+            </div>
           </div>
 
 
           <div className="row">
             <div className="col-sm">
-              <button type="button" className="btn-lg btn-info mr-3" onClick={this.handleShow.bind(this)}>Editar Perfil</button>
+              <button type="button" className="btn-lg btn-info mr-3 mt-5" onClick={this.handleShow.bind(this)}>Editar Perfil</button>
               <Modal show={this.state.show} onHide={this.handleClose.bind(this)}>
                 <Modal.Header closeButton>
                   <Modal.Title>Editar perfil</Modal.Title>
@@ -122,7 +133,7 @@ class ArtistProfile2 extends Component {
               </Modal>
 
               
-              <button type="button" className="btn-lg btn-warning" onClick={this.deleteProfile.bind(this)}>Eliminar Perfil</button>
+              <button type="button" className="btn-lg btn-warning mt-5" onClick={this.deleteProfile.bind(this)}>Eliminar Perfil</button>
             </div>
 
 
@@ -134,9 +145,9 @@ class ArtistProfile2 extends Component {
 
                   <div className="float-right" >
 
-                    <a href={this.state.facebook} target="_blank" style={icons}><i className="fa fa-facebook-square fa-5x"></i></a>
-                    <a href={this.state.instagram} target="_blank" style={icons}><i className="fa fa-instagram fa-5x"></i></a>
-                    <a href={this.state.youtube} target="_blank" style={icons}><i className="fa fa-youtube fa-5x margin-left"></i></a>
+                   {this.state.facebook ? <a href={this.state.facebook} target="_blank" style={icons}><i className="fa fa-facebook-square fa-5x mt-2"></i></a> : <i className="fa fa-facebook-square fa-5x mt-2" style={icons}></i> } 
+                   {this.state.instagram ? <a href={this.state.instagram} target="_blank" style={icons}><i className="fa fa-instagram fa-5x mt-2"></i></a> : <i className="fa fa-instagram fa-5x mt-2" style={icons}></i> } 
+                   {this.state.youtube ? <a href={this.state.youtube} target="_blank" style={icons}><i className="fa fa-youtube fa-5x mt-2"></i></a>: <i className="fa fa-youtube fa-5x mt-2" style={icons}></i> }
 
                   </div>
                 </div>

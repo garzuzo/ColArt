@@ -1,74 +1,64 @@
 import React, { Component } from 'react';
-import 'react-bootstrap-date-picker';
+import DatePicker from 'react-date-picker'
 
 class EventForm extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = {
             //artist that is in the form
-            title: "", date: newDate().toISOString(), stringDate: "", description: "", location:""
+            id:"", title: "", date: new Date(), stringDate: "", description: "", location:""
         }
     }
 
     handleAction(e) {
         e.preventDefault();
-
        
-        let artist = {
-            name: this.state.name,
-            lastname: this.state.lastname,
-            minidescription: this.state.minidescription,
+        let event = {
+            title: this.state.title,
+            stringDate : (this.state.date.getMonth()+1) +"/"+ this.state.date.getDate()+"/"+ this.state.date.getFullYear(),
             description: this.state.description,
-            profession: this.state.profession,
-            video: this.state.video,
-            picprofile: this.state.picprofile,
-            category: this.state.category,
-            facebook: this.state.facebook,
-            instagram: this.state.instagram,
-            youtube: this.state.youtube
+            location: this.state.location
         }
 
+        console.log(event.stringDate)
         //si esta en la bd se va a editar
         //let user= Meteor.user()
         
         //let user= Meteor.call('artists.findUsername');
-        if (this.props.artistEdit) {
+        if (this.state.id) {
             console.log("existe")
-            this.updateArtist(artist, this.props.artistEdit.username)
+            this.updateEvent(event)
         }
         //si no esta se va a crear
         else {
             console.log("no existe")
-            this.createArtist(artist)
+            this.createEvent(event)
             
         }
     }
 
-    createArtist(artist){
-        let finalArtist = {
-            name: artist.name,
-            lastname: artist.lastname,
-            minidescription: artist.minidescription,
-            description: artist.description,
-            profession: artist.profession,
-            video: artist.video,
-            picprofile: artist.picprofile,
-            category: artist.category,
-            facebook: artist.facebook,
-            instagram: artist.instagram,
-            youtube: artist.youtube,
-            events:[],
-            totalScore:0,
-            averageScore:0
-        }
-        Meteor.call('artists.insert', finalArtist)
-        //vericar
-        if (Meteor.userId()) {
-            window.location = '/MiPerfil';
-          } else {
-            alert("You have to be logged in to show you your profile");
-          }
+    createEvent(event){
+        let num = Math.floor(Math.random() * (15000 - 1)) + 1;
+        Meteor.call('events.insert', this.props.artist, num, event.title, event.stringDate, event.description, event.location, (err)=>{
+            if(err){
+                alert("Ocurrió un error. Intentalo de nuevo.")
+            }else{
+                alert("Evento creado exitosamente")
+            }
+        });
+        window.location = '/MiPerfil';
+    }
+
+    updateEvent(event){
+        Meteor.call('events.update', this.props.artist, this.props.id, event.title, event.stringDate, event.description, event.location, (err)=>{
+            if(err){
+                alert("Ocurrió un error. Intentalo de nuevo.")
+            }else{
+                alert("Evento actualizado exitosamente")
+            }
+        });       
+        window.location = '/MiPerfil';
     }
 
     handleOnChange(event) {
@@ -77,23 +67,23 @@ class EventForm extends Component {
         });
     }
 
+    handleDate(date) {
+        this.setState({
+            date : date
+        });
+    }
+
     componentDidMount() {
 
         console.log(this.props.artistEdit)
-        if(this.props.artistEdit){
+        if(this.props.id){
             this.setState({
-                name: this.props.artistEdit.artist.name,
-                lastname: this.props.artistEdit.artist.lastname,
-                minidescription: this.props.artistEdit.artist.minidescription,
-                description: this.props.artistEdit.artist.description,
-                profession: this.props.artistEdit.artist.profession,
-                picprofile: this.props.artistEdit.artist.picprofile,
-                category: this.props.artistEdit.artist.category,
-                facebook: this.props.artistEdit.artist.facebook,
-                instagram: this.props.artistEdit.artist.instagram,
-                youtube: this.props.artistEdit.artist.youtube,
-                video: this.props.artistEdit.artist.video
-              });
+                id: this.props.id,
+                title: this.props.title,
+                description: this.props.description,
+                date: new Date(this.props.date),
+                location: this.props.location
+         });
         }
       }
 
@@ -108,7 +98,7 @@ class EventForm extends Component {
 
                     <div className="form-group">
                         <label htmlFor="date">Fecha</label>
-                        <DatePicker id="datepicker" className="form-control" name="date" value={this.state.date} onChange={this.handleOnChange.bind(this)} />
+                        <DatePicker id="datepicker" className="form-control" value={this.state.date} onChange={this.handleDate.bind(this)} />
                     </div>
 
                     <div className="form-group">
@@ -120,7 +110,7 @@ class EventForm extends Component {
                         <label htmlFor="location">Lugar</label>
                         <input type="text" className="form-control" id="location" name="location" value={this.state.location} onChange={this.handleOnChange.bind(this)} />
                     </div>
-                    
+
                     <button type="submit" className="btn btn-primary mb-2">Enviar</button>
                 </form>
             </div>
@@ -128,4 +118,4 @@ class EventForm extends Component {
     }
 }
 
-export default ProfileForm;
+export default EventForm;

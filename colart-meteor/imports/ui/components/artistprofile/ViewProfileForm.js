@@ -35,7 +35,7 @@ class ViewProfileForm extends Component {
 
 
     } else {
-      alert("You have to be logged in")
+      alert("Tienes que iniciar sesión para mostrarte tu perfil");
     }
 
   }

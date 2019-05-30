@@ -19,8 +19,7 @@ import Crowdfunding from './components/Crowdfunding/Crowdfunding'
 import Category from './components/category/Category';
 import CategoryDetail from './components/categorydetail/CategoryDetail';
 import ViewProfileForm from './components/artistprofile/ViewProfileForm';
-import ArtistProfile2 from './components/artistprofile/ArtistProfile2';
-
+import Admin from './components/admin/Admin'
 class App extends Component {
   render() {
     
@@ -41,6 +40,7 @@ class App extends Component {
       <Route  exact path="/Category/:catAct" component={Category} />
       <Route exact  path="/CategoryDetail/:catDetAct" component={CategoryDetail} />
       <Route exact  path="/MiPerfil" component={ViewProfileForm} />
+      <Route exact  path="/Administracion" component={Admin} />
       
       </Router>
       </div>

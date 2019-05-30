@@ -29,13 +29,16 @@ Meteor.methods({
   'artists.findUsername'() {
 
     let user = Meteor.users.findOne({ _id: this.userId })
-
+console.log(this.userId)
     if (user && user.username){
 console.log(Artists.findOne({ username: user.username }))
       return Artists.findOne({ username: user.username })
     }
     else
       return null;
+  },
+  'findAdmin'(){
+   return Meteor.users.findOne({ _id: this.userId })
   },
   'artists.update'(artist, username) {
     Artists.update({ username: username }, {$set: {artist:artist}});
@@ -57,10 +60,14 @@ console.log(Artists.findOne({ username: user.username }))
   }, 
 
   'events.update'(artist, id, title, date, description, location){
-    Artists.update({username: artist.username, "artist.events.id":id}, {$set: {"artist.events.title": title, "artist.events.date": date, "artist.events.description": description, "artist.events.location": location}})
+    Artists.update({username: artist.username, "artist.events.id":id}, {$set: {"artist.events.$.title": title, "artist.events.$.date": date, "artist.events.$.description": description, "artist.events.$.location": location}})
   }, 
 
   'events.delete'(artist, id){
-    Artists.update({username: artist.username}, {$pull: {"artist.events": {"artist.events.id": id}}})
+    console.log("AQUI ENTRO" +  id);
+    Artists.update({username: artist.username}, {$pull: {"artist.events": {id: id}}})
+  },
+  'artistsByCategory'(categoryName){
+    return Artists.count({"artist.category": categoryName})
   }
 });

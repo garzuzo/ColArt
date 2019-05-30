@@ -58,16 +58,20 @@ class ProfileForm extends Component {
             facebook: artist.facebook,
             instagram: artist.instagram,
             youtube: artist.youtube,
-            events:[],
-            totalScore:0,
-            averageScore:0
+            events:[]
         }
-        Meteor.call('artists.insert', finalArtist)
+        Meteor.call('artists.insert', finalArtist, (err)=>{
+            if(err){
+                alert("Ocurrio un error. Intentalo nuevamente.");
+            }else{
+                alert("Perfil creado exitosamente");
+            }
+        })
         //vericar
         if (Meteor.userId()) {
             window.location = '/MiPerfil';
           } else {
-            alert("You have to be logged in to show you your profile");
+            alert("Tienes que iniciar sesión para mostrarte tu perfil");
           }
     }
 
@@ -85,11 +89,17 @@ class ProfileForm extends Component {
             facebook: artist.facebook,
             instagram: artist.instagram,
             youtube: artist.youtube,
-            events: this.props.artistEdit.artist.events,
-            totalScore:this.props.artistEdit.artist.totalScore,
-            averageScore:this.props.artistEdit.artist.averageScore
+            events: this.props.artistEdit.artist.events
         }
-        Meteor.call('artists.update', finalArtist,username)
+        Meteor.call('artists.update', finalArtist,username, (err)=>{
+            if(err){
+                alert("Ocurrio un error. Intentalo de nuevo.");
+            }
+            else{
+                alert("Perfil actualizado exitosamente");
+            }
+        })
+        window.location = '/MiPerfil';
     }
 
     handleOnChange(event) {
@@ -119,6 +129,18 @@ class ProfileForm extends Component {
       }
 
     render() {
+        var categories= [];
+        Meteor.call('categories.findAll', (err, res) =>{
+
+            if(res){              
+            for (var i = 0; i < res.length; i++) {
+            categories.push(
+             <option>{res[i].name}</option>);
+            }
+          }
+        }
+        );
+
         return (
             <div className="ProfileForm container mt-5">
                 <form onSubmit={this.handleAction.bind(this)}>
@@ -161,10 +183,7 @@ class ProfileForm extends Component {
                     <div className="form-group">
                         <label htmlFor="category">Categoria</label>
                         <select className="form-control custom-select" id="category" name="category" value={this.state.category} onChange={this.handleOnChange.bind(this)}>
-                            <option>Musica</option>
-                            <option>Pintura</option>
-                            <option>Teatro</option>
-                            <option>Danza</option>
+                            {categories}
                         </select>
                     </div>
 
