@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
-import Crowdfunding from '../Crowdfunding/Crowdfunding';
 import { Modal } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
+import ProfileForm from './ProfileForm';
+import EventsList from '../events/EventsList'
 
 class ArtistProfile extends Component {
-  constructor(props, context) {
-    super(props, context);
-
-    this.handleShow = this.handleShow.bind(this);
-    this.handleClose = this.handleClose.bind(this);
+  constructor(props) {
+    super(props);
 
     this.state = {
-      show: false,
-    };
+      //artist that is in the form
+      _id: "", name: "", lastname: "", minidescription: "", description: "", profession: "",
+      video: "https://www.youtube.com/embed/8zQTfGbyY5I?autoplay=1", picprofile: "", category: "", facebook: "", instagram: "", youtube: "",
+      show: false, artistAct: {}
+    }
+    this.findArtist = this.findArtist.bind(this);
   }
 
   handleClose() {
@@ -21,6 +23,42 @@ class ArtistProfile extends Component {
 
   handleShow() {
     this.setState({ show: true });
+  }
+
+
+  findArtist() {
+
+    Meteor.call('artist.findByUsername', this.props.match.params.artAct, (err, res) => {
+
+      if (res) {
+        this.setState({ artistAct: res })
+        this.setState({
+          name: this.state.artistAct.artist.name,
+          lastname: this.state.artistAct.artist.lastname,
+          minidescription: this.state.artistAct.artist.minidescription,
+          description: this.state.artistAct.artist.description,
+          profession: this.state.artistAct.artist.profession,
+          picprofile: this.state.artistAct.artist.picprofile,
+          category: this.state.artistAct.artist.category,
+          facebook: this.state.artistAct.artist.facebook,
+          instagram: this.state.artistAct.artist.instagram,
+          youtube: this.state.artistAct.artist.youtube,
+          video: this.state.artistAct.artist.video
+        });
+      }
+    })
+
+  }
+
+  componentDidMount() {
+
+    this.findArtist();
+
+
+  }
+
+  deleteProfile() {
+    Meteor.call('artists.delete');
   }
 
   render() {
@@ -33,7 +71,8 @@ class ArtistProfile extends Component {
 
     var icons = {
       fontSize: "50",
-      textColor: 'black'
+      color: 'black',
+      marginLeft: '10px'
     }
 
 
@@ -42,57 +81,39 @@ class ArtistProfile extends Component {
       height: '240px'
     };
     return (
-      <div className="ArtistProfile container">
-
-
-
+      <div className="ArtistProfile2 container">
 
         <div className="container">
-          <h1 className="text-center">Daniel Quintero</h1>
+          <h1 className="text-center" >{this.state.name} {this.state.lastname}</h1>
+
           <br></br>
-        
+
           <div className="row">
             <div className="col-sm">
-              <img src="https://images.pexels.com/photos/1425297/pexels-photo-1425297.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" style={styles}></img>
-         
+              <img src={this.state.picprofile} style={styles}></img>
             </div>
-           
+
             <div className="col-sm">
-
               <h1>Descripción</h1>
-              <p>Me apasiona la música desde el vientre de mi madre. He soñado que con la letra de mis canciones. <br></br>
-                Las personas se conecten conmigo y disfruten la vida de otra manera con la melodía de mi guitarra.</p>
+              <p>{this.state.description}</p>
             </div>
-
-
-
-
           </div>
 
 
           <div className="row">
             <div className="col-sm">
-            <div>
-              <i className="fa fa-star text-warning fa-3x"></i>
-              <i className="fa fa-star text-warning fa-3x"></i>
-              <i className="fa fa-star text-warning fa-3x"></i>
-              <i className="fa fa-star text-warning fa-3x"></i>
-              <i className="fa fa-star-half-o text-warning fa-3x"></i>
+              <div>
+                <i className="fa fa-star text-warning fa-3x"></i>
+                <i className="fa fa-star text-warning fa-3x"></i>
+                <i className="fa fa-star text-warning fa-3x"></i>
+                <i className="fa fa-star text-warning fa-3x"></i>
+                <i className="fa fa-star-half-o text-warning fa-3x"></i>
               </div>
               <h2><i className="fa fa-calendar"></i>Próximos Eventos</h2>
-              <h5>Fecha: Mayo 12, 2019</h5>
-              <h5>Celebración Día de la Madre</h5>
-              <h6>Presentación en vivo en Hotel Dann Carlton</h6>
-              <hr></hr>
-              <h5>Fecha: Junio 13, 2019</h5>
-              <h5>Homenaje Metallica</h5>
-              <h6>Presentación en vivo en Bar Route66</h6>
-              <hr></hr>
-
+              <EventsList events={this.state.artistAct.artist.events} />
             </div>
             <div className="col-sm">
-              <iframe width="560" height="315" src="https://www.youtube.com/embed/hXQxSi34GWY?autoplay=1" frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-
+              <iframe width="560" height="315" src={this.state.video} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
             </div>
 
           </div>
@@ -100,46 +121,34 @@ class ArtistProfile extends Component {
 
           <div className="row">
             <div className="col-sm">
+              <button type="button" className="btn-lg btn-info mr-3" onClick={this.handleShow.bind(this)}>Editar Perfil</button>
+              <Modal show={this.state.show} onHide={this.handleClose.bind(this)}>
+                <Modal.Header closeButton>
+                  <Modal.Title>Editar perfil</Modal.Title>
+                </Modal.Header>
+                <Modal.Body><ProfileForm artistEdit={this.state.artistAct} /> </Modal.Body>
+              </Modal>
 
+
+              <button type="button" className="btn-lg btn-warning" onClick={this.deleteProfile.bind(this)}>Eliminar Perfil</button>
             </div>
 
 
             <div className="col-sm">
 
               <div className="row">
-                <div className="col-sm">
-                  <Button variant="light btn-lg" onClick={this.handleShow}>
-                    <i className="fa fa-credit-card fa-5x"></i> ¡Apoyame!
-  </Button>
 
-                  <Modal show={this.state.show} onHide={this.handleClose}>
-                    <Modal.Header closeButton>
-                      <Modal.Title>Crowdfunding</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body> <Crowdfunding /> </Modal.Body>
-                    <Modal.Footer>
-                      <Button variant="secondary" onClick={this.handleClose}>
-                        Cerrar
-            </Button>
-                      <Button variant="primary" onClick={this.handleClose}>
-                        Aceptar
-            </Button>
-                    </Modal.Footer>
-                  </Modal>
-                </div>
                 <div className="col-sm">
 
                   <div className="float-right" >
 
-                    <i className="fa fa-facebook-square fa-5x " ></i>
-                    <i className="fa fa-instagram fa-5x"></i>
-                    <i className="fa fa-youtube fa-5x margin-left"></i>
-                   
+                    <a href={this.state.facebook} target="_blank" style={icons}><i className="fa fa-facebook-square fa-5x"></i></a>
+                    <a href={this.state.instagram} target="_blank" style={icons}><i className="fa fa-instagram fa-5x"></i></a>
+                    <a href={this.state.youtube} target="_blank" style={icons}><i className="fa fa-youtube fa-5x margin-left"></i></a>
+
                   </div>
                 </div>
               </div>
-
-
 
 
             </div>

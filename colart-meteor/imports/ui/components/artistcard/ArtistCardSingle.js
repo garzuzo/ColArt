@@ -7,7 +7,8 @@ class ArtistCardSingle extends Component {
         this.state = {
             name: this.props.name,
             url: this.props.url,
-            description:this.props.description
+            description:this.props.description,
+            username:this.props.username
         };
     }
     render() {
@@ -23,7 +24,7 @@ class ArtistCardSingle extends Component {
           
         return (
             <div className="ArtistCardSingle text-center">
-                <Link className="nav-link" to="/ArtistProfile">
+                <Link className="nav-link" to={"/ArtistProfile/"+this.state.username}>
 
 
                     <div className="card-group mx-auto w-20 img-thumbnail text-center">

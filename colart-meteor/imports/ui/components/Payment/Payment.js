@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
-
+import Alert from 'react-bootstrap/Alert'
 class Payment extends Component {
 
 
@@ -15,7 +15,9 @@ class Payment extends Component {
       tax: "11900",
       taxReturnBase: "58100",
       ApiKey: "4Vj8eK4rloUd272L48hsrarnUA", merchantId: "508029", referenceCode: "ColartPremium", currency: "COP"
-
+, variante: "",
+show:false,
+msg:"Al crear una cuenta Ya posees el plan free. ¡Animate y suscribete a nuestro plan Premium y disfruta de todos nuestros servicios!"
 
     }
 
@@ -44,10 +46,14 @@ class Payment extends Component {
 
   }
 
+  
 
-
+    
 
   render() {
+
+    const handleHide = () => this.setState({ show: false });
+    const handleShow = () => this.setState({ show: true });
     var styles = {
       width: '300px',
       height: '300px',
@@ -58,7 +64,8 @@ class Payment extends Component {
     return (
       <div className="Payment">
 
-
+<Alert className="text-center" show={this.state.show} dismissible="true" onClick={handleHide} variant="success" >{this.state.msg}</Alert>
+       
 
 
 
@@ -67,7 +74,7 @@ class Payment extends Component {
           <h1>Se parte de ColArt con planes diseñados para ti</h1>
 
 
-          <button type="button" className="btn btn-secondary  btn-lg" style={styles}>
+          <button type="button" onClick={handleShow} className="btn btn-secondary  btn-lg" style={styles}>
             <h3>Free</h3>
             <div className="container ml-4">
               <div className="row">

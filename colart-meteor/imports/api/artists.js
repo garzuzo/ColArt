@@ -47,5 +47,8 @@ console.log(Artists.findOne({ username: user.username }))
   },
   'findArtistsByCategory'(categoryName){
     return Artists.find({"artist.category":categoryName}).fetch();
+  },
+  'artists.findByUsername'(username){
+    return Artists.findOne({username:username});
   }
 });

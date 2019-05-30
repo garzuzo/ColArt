@@ -139,7 +139,7 @@ class Category extends Component {
             let description = this.state.artists[i].artist.minidescription;
             let username=this.state.artists[i].username;
             artistsList.push(<div className="col-sm" key={username}>
-                <ArtistCardSingle name={name} url={url} description={description} ></ArtistCardSingle>
+                <ArtistCardSingle name={name} url={url} description={description} username={username} ></ArtistCardSingle>
             </div>)
 
         }
