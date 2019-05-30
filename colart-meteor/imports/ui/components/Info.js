@@ -6,10 +6,34 @@ class Info extends Component {
     super();
 
     this.state = {
-        email:"", text:"", name:"", category:""
+        email:"", text:"", name:"", category:"",loadedCategories:[]
     }
 }
 
+loadCategories(){
+
+  var categories= [];
+  Meteor.call('categories.findAll', (err, res) =>{
+
+      if(res){            
+        
+      for (var i = 0; i < res.length; i++) {
+         if(i== 0 )
+         categories.push(<option key="seleccionar" value="">Seleccionar</option> );
+      categories.push(
+       <option key={res[i].name} value={res[i].name}>{res[i].name}</option>);
+      
+      }
+    
+
+      this.setState({loadedCategories:categories});
+    }
+  }
+  );
+}
+componentDidMount() {
+this.loadCategories();
+}
   handleAction(){
     let subject= this.state.name + " está interesad@ en " + this.state.category;
     let msg= "Nombre: " + this.state.name + "\n" +
@@ -90,25 +114,22 @@ class Info extends Component {
         <form  onSubmit={this.handleAction.bind(this)}>
         <div className="form-group">
         <label htmlFor="name">Nombre</label>
-    <input type="text" className="form-control" id="name" name="name" value={this.state.name} onChange={this.handleOnChange.bind(this)} placeholder="Ingresa tu nombre"/>
+    <input type="text" className="form-control" id="name" name="name" value={this.state.name} onChange={this.handleOnChange.bind(this)} placeholder="Ingresa tu nombre" required/>
   </div>
         <div className="form-group">
         <label htmlFor="email">Correo electrónico</label>
-    <input type="email" className="form-control" id="email" name="email" value={this.state.email} onChange={this.handleOnChange.bind(this)} placeholder="name@example.com"/>
+    <input type="email" className="form-control" id="email" name="email" value={this.state.email} onChange={this.handleOnChange.bind(this)} placeholder="name@example.com" required/>
   </div>
   <div className="form-group">
     <label htmlFor="category">Arte al que desearía pertenecer</label>
-    <select className="form-control custom-select" id="category" name="category" value={this.state.category} onChange={this.handleOnChange.bind(this)}>
-      <option>Música</option>
-      <option>Pintura</option>
-      <option>Danza</option>
-      <option>Teatro</option>
+    <select className="form-control custom-select" id="category" name="category" value={this.state.category} onChange={this.handleOnChange.bind(this)} required>
+    {this.state.loadedCategories}
     </select>
   </div>
 
   <div className="form-group">
     <label htmlFor="text">Cuentános qué desearías saber</label>
-    <textarea className="form-control" id="text" rows="3" name="text" value={this.state.text} onChange={this.handleOnChange.bind(this)}></textarea>
+    <textarea className="form-control" id="text" rows="3" name="text" value={this.state.text} onChange={this.handleOnChange.bind(this)} required></textarea>
   </div>
   <button type="submit" className="btn btn-primary">Enviar</button>
 </form>
