@@ -6,9 +6,10 @@ class EventsList extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { artist: this.props.artist,
+    this.state = {
        eventsAct: [],
-        events: this.props.artist.events }
+       artist: this.props.artist,
+       }
 
     this.createEventItem = this.createEventItem.bind(this);
   }
@@ -16,29 +17,30 @@ class EventsList extends Component {
   createEventItem() {
 
     var artist = this.state.artist;
-    var eventsState = this.state.events;
+ 
     var eventsList = [];
-    if (eventsState) {
-      console.log(eventsState)
-      for (var i = 0; i < eventsState.length; i++) {
+    if (this.state.artist.events) {
+      console.log(this.state.artist.events)
+      for (var i = 0; i < this.state.artist.events.length; i++) {
 
-        let id = eventsState[i].id;
-        let title = eventsState[i].title;
-        let date = eventsState[i].date;
-        let description = eventsState[i].description;
-        let location = eventsState[i].location;
+        let id = this.state.artist.events[i].id;
+        let title = this.state.artist.events[i].title;
+        let date = this.state.artist.events[i].date;
+        let description = this.state.artist.events[i].description;
+        let location = this.state.artist.events[i].location;
 
         eventsList.push(
           <EventItem key={id} artist={this.state.artist} id={id} title={title} date={date} description={description} location={location} />
         )
 
       }
+     
       this.setState({ eventsAct: eventsList })
     }
 
   }
   componentDidMount() {
-
+//console.log(this.props.artist.events)
     this.createEventItem();
 
   }

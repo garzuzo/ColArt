@@ -14,7 +14,7 @@ if (Meteor.isServer) {
 Meteor.methods({
 
     'categories.insert'(category) {
-        if (!CategoryCollection.find({ name: category.name }))
+        if (!CategoryCollection.findOne({ "name": category.name }))
           return  CategoryCollection.insert(category);
             else return null;
     },

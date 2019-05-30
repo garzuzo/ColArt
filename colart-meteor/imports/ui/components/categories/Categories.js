@@ -36,7 +36,13 @@ class Categories extends Component {
       motivationDescription: "Debemos hacer que el ciudadano sienta y vea las bondades de la clase de música, de lo contrario él seguirá pensando (sintiendo) que, si bien eso lo ayuda o podría ayudarlo, nadie debe tomar decisiones afectivas por él. Este es el estricto punto de la cuestión: el afecto, lo emocional, los sentimientos. La idea es partir del afecto y no de la técnica."
 
     }
+    
     Meteor.call('categories.insert', categoryMusic);
+
+
+
+
+
     /*  let categoryDance = {
  
        image: "https://images.pexels.com/photos/576801/pexels-photo-576801.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
