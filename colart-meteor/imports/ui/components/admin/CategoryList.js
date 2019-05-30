@@ -3,6 +3,16 @@ import CategoryItem from './CategoryItem';
 
 class CategoryList extends Component {
 
+    constructor(props){
+        super(props);
+        this.state={
+            categories:[]
+        }
+    }
+
+    componentDidMount(){
+        
+    }
     render() {
     console.log(this.props.categories);
 
@@ -14,16 +24,13 @@ class CategoryList extends Component {
 
         for (var i = 0; i < this.props.categories.length; i++) {
 
-            let catTemp = this.props.categories[i];
-            
-            let numUsers = Meteor.call('artistsByCategory', catTemp.name);
-
+            let catTemp = this.props.categories[i];            
             categories.push(
-                <CategoryItem key={catTemp.name} category={catTemp} users={numUsers} /> 
-            )
-
+                <CategoryItem key={catTemp.name} category={catTemp}/> 
+            )    
         }
 
+        console.log(categories);
         return (
             <div className="CategoryList">
 
@@ -33,7 +40,6 @@ class CategoryList extends Component {
                             <th scope="col">Imagen</th>
                             <th scope="col">Nombre</th>
                             <th scope="col">Mini Descripción</th>
-                            <th scope="col">Número de usuarios</th>
                             <th scope="col">Acciones</th>
                         </tr>
                     </thead>

@@ -78,16 +78,15 @@ class CategoryDetail extends Component {
 
           </div>
 
-
-
+          <Link className="nav-link" to={"/Category/"+this.props.match.params.catDetAct}>
+          <button className="btn btn-primary">Volver</button>
+        </Link>
 
         </div>
 
 
 
-        <Link className="nav-link" to={"/Category/"+this.props.match.params.catDetAct}>
-          <button className="btn btn-primary">Volver</button>
-        </Link>
+        
       </div>
     );
   }

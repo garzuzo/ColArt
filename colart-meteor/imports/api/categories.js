@@ -24,6 +24,7 @@ Meteor.methods({
 
     },
     'categories.update'(category, categoryName) {
+      console.log(categoryName)
         CategoryCollection.update({ name: categoryName }, category);
     },
     'categories.delete'(categoryName) {

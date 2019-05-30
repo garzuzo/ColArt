@@ -84,10 +84,10 @@ class Info extends Component {
         <br></br>
         <h1>REDES SOCIALES</h1>
         <h4> ¡Siguenos en Facebook! <a className="nav-link" href="https://www.facebook.com/colartco/" target="_blank">https://www.facebook.com/colartco/</a></h4> 
-        <br></br>
+        
         <h1>CONTACTÁNOS</h1>
 
-        <form  onSubmit={this.handleAction.bind(this)}>>
+        <form  onSubmit={this.handleAction.bind(this)}>
         <div className="form-group">
         <label htmlFor="name">Nombre</label>
     <input type="text" className="form-control" id="name" name="name" value={this.state.name} onChange={this.handleOnChange.bind(this)} placeholder="Ingresa tu nombre"/>

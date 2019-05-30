@@ -30,22 +30,23 @@ class CategoryForm extends Component {
         //si esta en la bd se va a editar
         //let user= Meteor.user()
         
-        let catLooking= Meteor.call('categories.findByName',category.name);
+        Meteor.call('categories.findByName',category.name, (err, res)=>{
 
-        if (catLooking) {
-            console.log("existe")
-            this.updateCategory(category)
-        }
-        //si no esta se va a crear
-        else {
-            console.log("no existe")
-            this.createCategory(category)
-            
-        }
+            if (res) {
+                console.log("existe")
+                this.updateCategory(category)
+            }
+            //si no esta se va a crear
+            else {
+                console.log("no existe")
+                this.createCategory(category)
+                
+            }
+        });
+        
     }
 
     createCategory(category){
-        let num = Math.floor(Math.random() * (15000 - 1)) + 1;
         Meteor.call('categories.insert',category, (err)=>{
             if(err){
                 alert("Ocurrió un error. Intentalo de nuevo.")
@@ -103,7 +104,8 @@ class CategoryForm extends Component {
 
                     <div className="form-group">
                         <label htmlFor="name">Nombre</label>
-                        <input type="text" className="form-control" id="name" name="name" value={this.state.name} onChange={this.handleOnChange.bind(this)} required/>
+                    {this.state.name ? <input type="text" className="form-control" id="name" name="name" value={this.state.name} onChange={this.handleOnChange.bind(this)} readOnly/> :
+                    <input type="text" className="form-control" id="name" name="name" value={this.state.name} onChange={this.handleOnChange.bind(this)} required/>}    
                     </div>
 
                     <div className="form-group">
@@ -113,7 +115,7 @@ class CategoryForm extends Component {
 
                     <div className="form-group">
                         <label htmlFor="description">Descripción</label>
-                        <input type="text" className="form-control" id="description" name="description" value={this.state.description} onChange={this.handleOnChange.bind(this)} required/>
+                        <textarea type="text" className="form-control" id="description" name="description" value={this.state.description} onChange={this.handleOnChange.bind(this)} required/>
                     </div>
 
                     <div className="form-group">
@@ -123,7 +125,7 @@ class CategoryForm extends Component {
 
                     <div className="form-group">
                         <label htmlFor="historyDescription">Historia</label>
-                        <input type="text" className="form-control" id="historyDescription" name="historyDescription" value={this.state.historyDescription} onChange={this.handleOnChange.bind(this)} required/>
+                        <textarea type="text" className="form-control" id="historyDescription" name="historyDescription" value={this.state.historyDescription} onChange={this.handleOnChange.bind(this)} required/>
                     </div>
 
                     <div className="form-group">
@@ -133,7 +135,7 @@ class CategoryForm extends Component {
 
                     <div className="form-group">
                         <label htmlFor="funFactsDescription">Datos curiosos</label>
-                        <input type="text" className="form-control" id="funFactsDescription" name="funFactsDescription" value={this.state.funFactsDescription} onChange={this.handleOnChange.bind(this)} required/>
+                        <textarea type="text" className="form-control" id="funFactsDescription" name="funFactsDescription" value={this.state.funFactsDescription} onChange={this.handleOnChange.bind(this)} required/>
                     </div>
 
                     <div className="form-group">
@@ -143,7 +145,7 @@ class CategoryForm extends Component {
 
                     <div className="form-group">
                         <label htmlFor="motivationDescription">Motivación</label>
-                        <input type="text" className="form-control" id="motivationDescription" name="motivationDescription" value={this.state.motivationDescription} onChange={this.handleOnChange.bind(this)} required />
+                        <textarea type="text" className="form-control" id="motivationDescription" name="motivationDescription" value={this.state.motivationDescription} onChange={this.handleOnChange.bind(this)} required />
                     </div>
 
                     <button type="submit" className="btn btn-primary mb-2">Enviar</button>

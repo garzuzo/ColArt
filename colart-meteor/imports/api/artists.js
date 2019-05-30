@@ -70,6 +70,6 @@ console.log(Artists.findOne({ username: user.username }))
     Artists.update({username: artist.username}, {$pull: {"artist.events": {id: id}}})
   },
   'artistsByCategory'(categoryName){
-    return Artists.count({"artist.category": categoryName})
+    return Artists.find({"artist.category": categoryName}).fetch();
   }
 });
