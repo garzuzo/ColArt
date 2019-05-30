@@ -29,9 +29,10 @@ Meteor.methods({
   'artists.findUsername'() {
 
     let user = Meteor.users.findOne({ _id: this.userId })
-console.log(this.userId)
+//console.log(this.userId)
     if (user && user.username){
-console.log(Artists.findOne({ username: user.username }))
+//console.log(Artists.findOne({ username: user.username }))
+
       return Artists.findOne({ username: user.username })
     }
     else
@@ -53,8 +54,9 @@ console.log(Artists.findOne({ username: user.username }))
   },
   'artists.findByUsername'(username){
   
-    
-    return   Artists.findOne({username:username});
+    let answ=Artists.findOne({username:username});
+    //console.log(answ.artist.events)
+    return   answ;
   }
 ,
   'events.insert'(artist, id, title, date, description, location){
