@@ -107,7 +107,7 @@ class ArtistProfile2 extends Component {
           <div className="row">
             <div className="col-sm">
               <h2><i className="fa fa-calendar mr-2"></i>Mis Eventos</h2>
-              <EventsList artist={this.props.artist.artist}/>
+              <EventsList artist={this.props.artist.artist} look="ver"/>
               <button type="button" className="btn btn-info mt-3" onClick={this.handleShowEvent.bind(this)}>Agregar evento</button>
             <Modal show={this.state.showEvent} onHide={this.handleCloseEvent.bind(this)}>
                 <Modal.Header closeButton>

@@ -42,14 +42,14 @@ class EventItem extends Component {
                 <h6>{this.props.description}</h6>
                 <h6>Lugar: {this.props.location}</h6>
 
-                <button type="button" className="btn-sm btn-warning mr-3 mt-3" onClick={this.handleShowEvent.bind(this)}>Editar evento</button>
+                {this.props.look ? <button type="button" className="btn-sm btn-warning mr-3 mt-3" onClick={this.handleShowEvent.bind(this)}>Editar evento</button> : ""}
                 <Modal show={this.state.showEvent} onHide={this.handleCloseEvent.bind(this)}>
                     <Modal.Header closeButton>
                         <Modal.Title>Editar Evento</Modal.Title>
                     </Modal.Header>
                     <Modal.Body> <EventForm artist={this.props.artist} id={this.props.id} title={this.props.title} date={this.props.date} description={this.props.description} location={this.props.location}/> </Modal.Body>
                 </Modal>
-                <button type="button" className="btn-sm btn-danger mt-3" onClick={this.deleteEvent.bind(this)}>Eliminar evento</button>
+                {this.props.look ? <button type="button" className="btn-sm btn-danger mt-3" onClick={this.deleteEvent.bind(this)}>Eliminar evento</button> : ""}
                 <hr></hr>
             </div>
         );

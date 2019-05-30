@@ -35,7 +35,7 @@ if (this.state.artist && this.state.artist.events) {
     let location = this.state.artist.events[i].location;
 
     eventsList.push(
-      <EventItem key={id} artist={this.state.artist} id={id} title={title} date={date} description={description} location={location} />
+      <EventItem key={id} look={this.props.look} artist={this.state.artist} id={id} title={title} date={date} description={description} location={location} />
     )
 
   }
