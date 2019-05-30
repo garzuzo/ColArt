@@ -160,10 +160,6 @@ class Category extends Component {
                             </Link>
                         </div>
                     </div>
-                    <h2>Artistas destacados</h2>
-                    <div className="row">
-                        {favArtistsList}
-                    </div>
                     <h2>Descubre nuevos artistas</h2>
                     <div className="row">
                         {artistsList}
