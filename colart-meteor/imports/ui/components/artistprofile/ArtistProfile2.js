@@ -12,7 +12,7 @@ class ArtistProfile2 extends Component {
       //artist that is in the form
       _id: "", name: "Holaaaaaaa", lastname: "", minidescription: "", description: "", profession: "",
       video: "https://www.youtube.com/embed/8zQTfGbyY5I?autoplay=1", picprofile: "", category: "", facebook: "", instagram: "", youtube: "",
-      show: false
+      show: false, showEvent: false
     }
   }
 
@@ -24,6 +24,13 @@ class ArtistProfile2 extends Component {
     this.setState({ show: true });
   }
 
+  handleCloseEvent() {
+    this.setState({ showEvent: false });
+  }
+
+  handleShowEvent() {
+    this.setState({ showEvent: true });
+  }
   componentDidMount() {
 
     this.setState({
@@ -75,6 +82,8 @@ class ArtistProfile2 extends Component {
           <div className="row">
             <div className="col-sm">
               <img src={this.state.picprofile} style={styles}></img>
+              <h3>{this.state.profession}</h3>
+              <p>{this.state.minidescription}</p> 
             </div>
 
             <div className="col-sm">
@@ -86,20 +95,19 @@ class ArtistProfile2 extends Component {
 
           <div className="row">
             <div className="col-sm">
-              <div>
-                <i className="fa fa-star text-warning fa-3x"></i>
-                <i className="fa fa-star text-warning fa-3x"></i>
-                <i className="fa fa-star text-warning fa-3x"></i>
-                <i className="fa fa-star text-warning fa-3x"></i>
-                <i className="fa fa-star-half-o text-warning fa-3x"></i>
-              </div>
               <h2><i className="fa fa-calendar"></i>Próximos Eventos</h2>
               <EventsList events={this.props.artist.artist.events}/>
             </div>
             <div className="col-sm">
               <iframe width="560" height="315" src={this.state.video} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
             </div>
-
+            <button type="button" className="btn btn-info mt-3" onClick={this.handleShowEvent.bind(this)}>Agregar evento</button>
+            <Modal show={this.state.showEvent} onHide={this.handleCloseEvent.bind(this)}>
+                <Modal.Header closeButton>
+                  <Modal.Title>Crear Evento</Modal.Title>
+                </Modal.Header>
+                <Modal.Body> <EventForm/> </Modal.Body>
+              </Modal>
           </div>
 
 
