@@ -93,22 +93,22 @@ class EventForm extends Component {
                 <form onSubmit={this.handleAction.bind(this)}>
                     <div className="form-group">
                         <label htmlFor="title">Título</label>
-                        <input type="text" className="form-control" id="title" name="title" value={this.state.title} onChange={this.handleOnChange.bind(this)} />
+                        <input type="text" className="form-control" id="title" name="title" value={this.state.title} onChange={this.handleOnChange.bind(this)} required />
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="date">Fecha</label>
-                        <DatePicker id="datepicker" className="form-control" value={this.state.date} onChange={this.handleDate.bind(this)} />
+                        <DatePicker id="datepicker" className="form-control" value={this.state.date} onChange={this.handleDate.bind(this)} required/>
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="description">Descripción</label>
-                        <input type="text" className="form-control" id="description" name="description" value={this.state.description} onChange={this.handleOnChange.bind(this)} />
+                        <textarea type="text" className="form-control" id="description" name="description" value={this.state.description} onChange={this.handleOnChange.bind(this)} required/>
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="location">Lugar</label>
-                        <input type="text" className="form-control" id="location" name="location" value={this.state.location} onChange={this.handleOnChange.bind(this)} />
+                        <input type="text" className="form-control" id="location" name="location" value={this.state.location} onChange={this.handleOnChange.bind(this)} required/>
                     </div>
 
                     <button type="submit" className="btn btn-primary mb-2">Enviar</button>

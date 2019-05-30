@@ -1,9 +1,11 @@
+
 import React, { Component } from 'react';
 import { Modal } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import ProfileForm from './ProfileForm';
-import EventsList from '../events/EventsList'
-
+import EventsList from '../events/EventsList';
+import EventForm from '../events/EventForm'
+import { Meteor } from 'meteor/meteor';
 class ArtistProfile extends Component {
   constructor(props) {
     super(props);
@@ -11,55 +13,41 @@ class ArtistProfile extends Component {
     this.state = {
       //artist that is in the form
       _id: "", name: "", lastname: "", minidescription: "", description: "", profession: "",
-      video: "https://www.youtube.com/embed/8zQTfGbyY5I?autoplay=1", picprofile: "", category: "", facebook: "", instagram: "", youtube: "",
-      show: false, artistAct: {}
+      video: "", picprofile: "", category: "", facebook: "", instagram: "", youtube: "",
+      show: false, showEvent: false, artistAct: {}, usernameAct: this.props.match.params.artAct
     }
     this.findArtist = this.findArtist.bind(this);
   }
 
-  handleClose() {
-    this.setState({ show: false });
-  }
-
-  handleShow() {
-    this.setState({ show: true });
-  }
-
-
   findArtist() {
 
-    Meteor.call('artist.findByUsername', this.props.match.params.artAct, (err, res) => {
+    Meteor.call('artists.findByUsername', this.state.usernameAct, (err, res) => {
 
       if (res) {
-        this.setState({ artistAct: res })
+
         this.setState({
-          name: this.state.artistAct.artist.name,
-          lastname: this.state.artistAct.artist.lastname,
-          minidescription: this.state.artistAct.artist.minidescription,
-          description: this.state.artistAct.artist.description,
-          profession: this.state.artistAct.artist.profession,
-          picprofile: this.state.artistAct.artist.picprofile,
-          category: this.state.artistAct.artist.category,
-          facebook: this.state.artistAct.artist.facebook,
-          instagram: this.state.artistAct.artist.instagram,
-          youtube: this.state.artistAct.artist.youtube,
-          video: this.state.artistAct.artist.video
+          artistAct: res.artist,
+          name: res.artist.name,
+          lastname: res.artist.lastname,
+          minidescription: res.artist.minidescription,
+          description: res.artist.description,
+          profession: res.artist.profession,
+          picprofile: res.artist.picprofile,
+          category: res.artist.category,
+          facebook: res.artist.facebook,
+          instagram: res.artist.instagram,
+          youtube: res.artist.youtube,
+          video: res.artist.video
         });
       }
     })
 
   }
-
   componentDidMount() {
-
     this.findArtist();
 
-
   }
 
-  deleteProfile() {
-    Meteor.call('artists.delete');
-  }
 
   render() {
     var styles = {
@@ -80,8 +68,9 @@ class ArtistProfile extends Component {
       width: '320px',
       height: '240px'
     };
+
     return (
-      <div className="ArtistProfile2 container">
+      <div className="ArtistProfile container">
 
         <div className="container">
           <h1 className="text-center" >{this.state.name} {this.state.lastname}</h1>
@@ -91,6 +80,10 @@ class ArtistProfile extends Component {
           <div className="row">
             <div className="col-sm">
               <img src={this.state.picprofile} style={styles}></img>
+              <div className="mx-auto">
+                <h3 >{this.state.profession}</h3>
+                <p >{this.state.minidescription}</p>
+              </div>
             </div>
 
             <div className="col-sm">
@@ -102,36 +95,19 @@ class ArtistProfile extends Component {
 
           <div className="row">
             <div className="col-sm">
-              <div>
-                <i className="fa fa-star text-warning fa-3x"></i>
-                <i className="fa fa-star text-warning fa-3x"></i>
-                <i className="fa fa-star text-warning fa-3x"></i>
-                <i className="fa fa-star text-warning fa-3x"></i>
-                <i className="fa fa-star-half-o text-warning fa-3x"></i>
-              </div>
-              <h2><i className="fa fa-calendar"></i>Próximos Eventos</h2>
-              <EventsList events={this.state.artistAct.artist.events} />
+              <h2><i className="fa fa-calendar mr-2"></i>Eventos</h2>
+              
+              <EventsList artist={this.state.artistAct} />
+
             </div>
             <div className="col-sm">
-              <iframe width="560" height="315" src={this.state.video} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+              {this.state.video ? <iframe width="560" height="315" src={this.state.video} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe> : <h1>Aquí va tu video. Anímate!</h1>}
             </div>
-
           </div>
 
 
           <div className="row">
-            <div className="col-sm">
-              <button type="button" className="btn-lg btn-info mr-3" onClick={this.handleShow.bind(this)}>Editar Perfil</button>
-              <Modal show={this.state.show} onHide={this.handleClose.bind(this)}>
-                <Modal.Header closeButton>
-                  <Modal.Title>Editar perfil</Modal.Title>
-                </Modal.Header>
-                <Modal.Body><ProfileForm artistEdit={this.state.artistAct} /> </Modal.Body>
-              </Modal>
 
-
-              <button type="button" className="btn-lg btn-warning" onClick={this.deleteProfile.bind(this)}>Eliminar Perfil</button>
-            </div>
 
 
             <div className="col-sm">
@@ -142,9 +118,9 @@ class ArtistProfile extends Component {
 
                   <div className="float-right" >
 
-                    <a href={this.state.facebook} target="_blank" style={icons}><i className="fa fa-facebook-square fa-5x"></i></a>
-                    <a href={this.state.instagram} target="_blank" style={icons}><i className="fa fa-instagram fa-5x"></i></a>
-                    <a href={this.state.youtube} target="_blank" style={icons}><i className="fa fa-youtube fa-5x margin-left"></i></a>
+                    {this.state.facebook ? <a href={this.state.facebook} target="_blank" style={icons}><i className="fa fa-facebook-square fa-5x mt-2"></i></a> : <i className="fa fa-facebook-square fa-5x mt-2" style={icons}></i>}
+                    {this.state.instagram ? <a href={this.state.instagram} target="_blank" style={icons}><i className="fa fa-instagram fa-5x mt-2"></i></a> : <i className="fa fa-instagram fa-5x mt-2" style={icons}></i>}
+                    {this.state.youtube ? <a href={this.state.youtube} target="_blank" style={icons}><i className="fa fa-youtube fa-5x mt-2"></i></a> : <i className="fa fa-youtube fa-5x mt-2" style={icons}></i>}
 
                   </div>
                 </div>

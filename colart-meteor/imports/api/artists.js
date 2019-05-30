@@ -52,7 +52,9 @@ console.log(Artists.findOne({ username: user.username }))
     return Artists.find({"artist.category":categoryName}).fetch();
   },
   'artists.findByUsername'(username){
-    return Artists.findOne({username:username});
+  
+    
+    return   Artists.findOne({username:username});
   }
 ,
   'events.insert'(artist, id, title, date, description, location){

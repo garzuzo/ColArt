@@ -7,8 +7,9 @@ class ProfileForm extends Component {
         this.state = {
             //artist that is in the form
             _id: "", name: "", lastname: "", minidescription: "", description: "", profession: "",
-            video: "", picprofile: "", category: "", facebook: "", instagram: "", youtube: ""
+            video: "", picprofile: "", category: "", facebook: "", instagram: "", youtube: "",loadedCategories:[]
         }
+        this.loadCategories=this.loadCategories.bind(this);
     }
 
     handleAction(e) {
@@ -71,7 +72,9 @@ class ProfileForm extends Component {
         if (Meteor.userId()) {
             window.location = '/MiPerfil';
           } else {
+            window.location = '/home';
             alert("Tienes que iniciar sesión para mostrarte tu perfil");
+           
           }
     }
 
@@ -108,8 +111,30 @@ class ProfileForm extends Component {
         });
     }
 
-    componentDidMount() {
 
+    loadCategories(){
+
+        var categories= [];
+        Meteor.call('categories.findAll', (err, res) =>{
+
+            if(res){            
+              
+            for (var i = 0; i < res.length; i++) {
+               if(i== 0 )
+               categories.push(<option key="seleccionar" value="">Seleccionar</option> );
+            categories.push(
+             <option key={res[i].name} value={res[i].name}>{res[i].name}</option>);
+            
+            }
+          
+
+            this.setState({loadedCategories:categories});
+          }
+        }
+        );
+    }
+    componentDidMount() {
+this.loadCategories();
         console.log(this.props.artistEdit)
         if(this.props.artistEdit){
             this.setState({
@@ -129,17 +154,7 @@ class ProfileForm extends Component {
       }
 
     render() {
-        var categories= [];
-        Meteor.call('categories.findAll', (err, res) =>{
-
-            if(res){              
-            for (var i = 0; i < res.length; i++) {
-            categories.push(
-             <option>{res[i].name}</option>);
-            }
-          }
-        }
-        );
+    
 
         return (
             <div className="ProfileForm container mt-5">
@@ -147,27 +162,27 @@ class ProfileForm extends Component {
                     <input type="hidden" name="_id" value={this.state._id} onChange={this.handleOnChange.bind(this)} />
                     <div className="form-group">
                         <label htmlFor="name">Nombre</label>
-                        <input type="text" className="form-control" id="name" name="name" value={this.state.name} onChange={this.handleOnChange.bind(this)} />
+                        <input type="text" className="form-control" id="name" name="name" value={this.state.name} onChange={this.handleOnChange.bind(this)} required/>
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="lastname">Apellido</label>
-                        <input type="text" className="form-control" id="lastname" name="lastname" value={this.state.lastname} onChange={this.handleOnChange.bind(this)} />
+                        <input type="text" className="form-control" id="lastname" name="lastname" value={this.state.lastname} onChange={this.handleOnChange.bind(this)} required/>
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="minidescription">Mini Descripción</label>
-                        <input type="text" className="form-control" id="minidescription" name="minidescription" value={this.state.minidescription} onChange={this.handleOnChange.bind(this)} />
+                        <input type="text" className="form-control" id="minidescription" name="minidescription" value={this.state.minidescription} onChange={this.handleOnChange.bind(this)} required/>
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="description">Descripción</label>
-                        <input type="text" className="form-control" id="description" name="description" value={this.state.description} onChange={this.handleOnChange.bind(this)} />
+                        <textarea type="text" className="form-control" id="description" name="description" value={this.state.description} onChange={this.handleOnChange.bind(this)} />
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="profession">Profesión</label>
-                        <input type="text" className="form-control" id="profession" name="profession" value={this.state.profession} onChange={this.handleOnChange.bind(this)} />
+                        <input type="text" className="form-control" id="profession" name="profession" value={this.state.profession} onChange={this.handleOnChange.bind(this)} required/>
                     </div>
 
                     <div className="form-group">
@@ -177,13 +192,13 @@ class ProfileForm extends Component {
 
                     <div className="form-group">
                         <label htmlFor="picprofile">Imagen de perfil</label>
-                        <input type="text" className="form-control" id="picprofile" name="picprofile" value={this.state.picprofile} onChange={this.handleOnChange.bind(this)} />
+                        <input type="text" className="form-control" id="picprofile" name="picprofile" value={this.state.picprofile} onChange={this.handleOnChange.bind(this)} required/>
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="category">Categoria</label>
-                        <select className="form-control custom-select" id="category" name="category" value={this.state.category} onChange={this.handleOnChange.bind(this)}>
-                            {categories}
+                        <select className="form-control" id="category" name="category" value={this.state.category} onChange={this.handleOnChange.bind(this)} required>
+                            {this.state.loadedCategories}
                         </select>
                     </div>
 

@@ -35,6 +35,7 @@ class ViewProfileForm extends Component {
 
 
     } else {
+      window.location = '/home';
       alert("Tienes que iniciar sesión para mostrarte tu perfil");
     }
 

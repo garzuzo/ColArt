@@ -3,31 +3,58 @@ import EventItem from './EventItem';
 
 class EventsList extends Component {
 
+
+  constructor(props) {
+    super(props);
+    this.state = { artist: this.props.artist,
+       eventsAct: [],
+        events: this.props.artist.events }
+
+    this.createEventItem = this.createEventItem.bind(this);
+  }
+
+  createEventItem() {
+
+    var artist = this.state.artist;
+    var eventsState = this.state.events;
+    var eventsList = [];
+    if (eventsState) {
+      console.log(eventsState)
+      for (var i = 0; i < eventsState.length; i++) {
+
+        let id = eventsState[i].id;
+        let title = eventsState[i].title;
+        let date = eventsState[i].date;
+        let description = eventsState[i].description;
+        let location = eventsState[i].location;
+
+        eventsList.push(
+          <EventItem key={id} artist={this.state.artist} id={id} title={title} date={date} description={description} location={location} />
+        )
+
+      }
+      this.setState({ eventsAct: eventsList })
+    }
+
+  }
+  componentDidMount() {
+
+    this.createEventItem();
+
+  }
+
+
   render() {
-    console.log(this.props.artist.events);
+
 
     //let  events = this.props.events.map( (eventTmp)=>
-      //  (<EventItem key={eventTmp.title} event={eventTmp} />)
+    //  (<EventItem key={eventTmp.title} event={eventTmp} />)
     //);
-    let events = [];
 
-        for (var i = 0; i < this.props.artist.events.length; i++) {
-
-            let id = this.props.artist.events[i].id;
-            let title = this.props.artist.events[i].title;
-            let date = this.props.artist.events[i].date;
-            let description = this.props.artist.events[i].description;
-            let location = this.props.artist.events[i].location;
-
-            events.push(
-               <EventItem key={id} artist={this.props.artist} id={id} title={title} date={date} description={description} location={location}/>
-            )
-
-        }
 
     return (
       <div className="EventsList">
-            {events}
+        {this.state.eventsAct}
       </div>
     );
   }

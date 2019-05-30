@@ -19,6 +19,7 @@ class NavBar extends Component {
     if (Meteor.userId()) {
       window.location = '/MiPerfil';
     } else {
+      window.location = '/Home';
       alert("Tienes que iniciar sesión para mostrarte tu perfil");
     }
 
