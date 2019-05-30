@@ -48,4 +48,16 @@ console.log(Artists.findOne({ username: user.username }))
   'findArtistsByCategory'(categoryName){
     return Artists.find({"artist.category":categoryName}).fetch();
   }
+,
+  'events.insert'(artist, id, title, date, description, location){
+    Artists.update({username: artist.username}, {$push: {"artist.events": {id: id, title:title, date: date, description: description, location: location}} })
+  }, 
+
+  'events.update'(artist, id, title, date, description, location){
+    Artists.update({username: artist.username, "artist.events.id":id}, {$set: {"artist.events.title": title, "artist.events.date": date, "artist.events.description": description, "artist.events.location": location}})
+  }, 
+
+  'events.delete'(artist, id){
+    Artists.update({username: artist.username}, {$pull: {"artist.events": {"artist.events.id": id}}})
+  }
 });

@@ -13,13 +13,14 @@ class EventsList extends Component {
 
         for (var i = 0; i < this.props.events.length; i++) {
 
+            let id = this.props.events[i].id;
             let title = this.props.events[i].title;
             let date = this.props.events[i].date;
             let description = this.props.events[i].description;
             let location = this.props.events[i].location;
 
             events.push(
-               <EventItem key={title} title={title} date={date} description={description} location={location}/>
+               <EventItem key={id} title={title} date={date} description={description} location={location}/>
             )
 
         }
@@ -27,7 +28,6 @@ class EventsList extends Component {
     return (
       <div className="EventsList">
             {events}
-            <button type="button" className="btn btn-info mt-3">Agregar evento</button>
       </div>
     );
   }
